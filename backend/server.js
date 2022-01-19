@@ -19,32 +19,37 @@ const UserSchema = new mongoose.Schema({
 		type: String,
 		unique: true,
 		required: true,
+		minlength: 3,
+		maxlength: 50,
 	},
 	password: {
 		type: String,
 		required: true,
+		minlength: 8,
 	},
 	accessToken: {
 		type: String,
 		default: () => crypto.randomBytes(128).toString("hex"),
+	},
+	email: {
+		type: String,
+		unique: true,
+		required: true,
 	},
 	name: [
 		{
 			firstName: {
 				type: String,
 				required: true,
+				trim: true, //trims down excess spaces
 			},
 			lastName: {
 				type: String,
 				required: true,
+				trim: true,
 			},
 		},
 	],
-	email: {
-		type: String,
-		unique: true,
-		required: true,
-	},
 	location: [
 		{
 			country: {
@@ -56,6 +61,14 @@ const UserSchema = new mongoose.Schema({
 			},
 		},
 	],
+	score: {
+		type: Number,
+		default: 0,
+	},
+	createdAt: {
+		type: Date,
+		default: () => Date.now(),
+	},
 	role: {
 		type: mongoose.Schema.Types.ObjectId,
 		ref: "Role",
@@ -81,7 +94,7 @@ const app = express();
 app.use(cors());
 app.use(express.json());
 
-// check is accesstoken was sent with the request
+// check if accesstoken was sent with the request
 const authenticateUser = async (req, res, next) => {
 	const accessToken = req.header("Authorization");
 	try {
@@ -121,43 +134,73 @@ app.post("/role", async (req, res) => {
 });
 
 app.post("/signup", async (req, res) => {
-	const { username, password } = req.body;
+	const { username, firstName, lastName, email, country, password } = req.body;
+	console.log(req.body);
+	console.log(username, firstName, lastName, email, country, password);
 	try {
 		const salt = bcrypt.genSaltSync();
 
+		// detta använde så att vi så att det verifierades innan ett error, vet inte vad för och nackdelar är.
+		// const user = await User.findOne({ username });
+		// const salt = bcrypt.genSaltSync();
+
+		// // checks if user already exists, if user exists - asks user to sign-in instead
+		// if (user) {
+		// 	throw "This username is already registered. Please choose another one or login.";
+		// }
+
+		// // ensures the username length is minimum X characters
+		// if (username.length < X) {
+		// 	throw "Username has to be at least X characters";
+		// }
+
+		// // ensures the password length is minimum X characters
+		// if (password.length < X) {
+		// 	throw "Password has to be at least X characters";
+		// }
+		console.log("before newUser-save");
 		const newUser = await new User({
 			username,
+			name: { firstName, lastName },
+			email,
+			location: { country, city },
 			password: bcrypt.hashSync(password, salt),
 		}).save();
+
+		console.log(newUser);
 
 		res.status(201).json({
 			response: {
 				userId: newUser._id,
 				username: newUser.username,
+				// firstName: newUser.name.firstName,
+				// lastName: newUser.name.lastName,
+				// email: newUser.email,
+				// location: newUser.location.country,
+				// role: newUser.role.description, //kan vi skicka detta? hur?
 				accessToken: newUser.accessToken,
 			},
 			success: true,
 		});
 	} catch (error) {
-		//console.log(error.code)
-		if (error.code === 11000) {
-			res.status(400).json({
-				response: error,
-				message:
-					"This username is already registered. please choose another one",
-				success: false,
-			});
-		} else {
-			res.status(400).json({
-				response: error,
-				message: "Something went wrong...",
-				success: false,
-			});
-		}
+		// if (error.code === 11000) {
+		// 	res.status(400).json({
+		// 		response: error,
+		// 		message:
+		// 			"This username is already registered. Please choose another one or login.",
+		// 		success: false,
+		// 	});
+		// } else {
+		res.status(400).json({
+			response: error,
+			message: "Something went wrong...",
+			success: false,
+		});
+		// }
 	}
 });
 
-app.post("/signin", async (req, res) => {
+app.post("/login", async (req, res) => {
 	const { username, password } = req.body;
 
 	try {
@@ -169,11 +212,64 @@ app.post("/signin", async (req, res) => {
 				username: user.username,
 				accessToken: user.accessToken,
 			});
-		} else if (user && !bcrypt.compareSync(password, user.password)) {
-			res.status(403).json({ message: "Incorrect password", success: false });
 		} else {
-			res.status(404).json({ message: "User not found", success: false });
+			res.status(404).json({
+				message: "User not found or password incorrect",
+				success: false,
+			});
 		}
+	} catch (error) {
+		res.status(400).json({
+			response: error,
+			message: "Something went wrong...",
+			success: false,
+		});
+	}
+});
+
+app.get("/leaderboard", authenticateUser);
+app.get("/leaderboard", async (req, res) => {
+	const { country, timeSpan } = req.query;
+
+	try {
+		const topUser = await User.find().sort({ score: "desc" }).exec();
+		let filteredLeaderboard;
+
+		if (country) {
+			filteredLeaderboard = filteredLeaderboard
+				.filter((item) => item.country === topUser.country)
+				.exec();
+		}
+
+		if (timeSpan) {
+			filteredLeaderboard = filteredLeaderboard.filter().exec();
+		}
+
+		filteredLeaderboard = filteredLeaderboard
+			.sort({ score: "desc" })
+			.limit(20)
+			.exec();
+
+		res.status(200).json({
+			response: filteredLeaderboard,
+			success: true,
+		});
+	} catch (error) {
+		res.status(400).json({
+			response: error,
+			message: "Something went wrong...",
+			success: false,
+		});
+	}
+});
+
+app.get("/information", authenticateUser);
+app.get("/information", async (req, res) => {
+	try {
+		res.status(200).json({
+			response,
+			success: true,
+		});
 	} catch (error) {
 		res.status(400).json({
 			response: error,
