@@ -19,6 +19,15 @@ const Btn = styled.button`
   border: 2px solid rgb(114, 84, 38);
   border-radius: 10px;
   box-shadow: inset 0 0 0 0 rgb(114, 84, 38);
+
+  &:hover {
+    color: white;
+    box-shadow: inset 0 -100px 0 0 rgb(114, 84, 38);
+  }
+
+  &:active {
+    transform: scale(0.9);
+  }
 `;
 
 const Button = ({ text }) => {
