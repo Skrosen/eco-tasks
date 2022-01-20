@@ -36,31 +36,23 @@ const UserSchema = new mongoose.Schema({
     unique: true,
     required: true,
   },
-  name: [
-    {
-      firstName: {
-        type: String,
-        required: true,
-        trim: true, //trims down excess spaces
-      },
-      lastName: {
-        type: String,
-        required: true,
-        trim: true,
-      },
-    },
-  ],
-  location: [
-    {
-      country: {
-        type: String,
-        required: true,
-      },
-      city: {
-        type: String,
-      },
-    },
-  ],
+  firstName: {
+    type: String,
+    required: true,
+    trim: true, //trims down excess spaces
+  },
+  lastName: {
+    type: String,
+    required: true,
+    trim: true,
+  },
+  country: {
+    type: String,
+    required: true,
+  },
+  city: {
+    type: String,
+  },
   score: {
     type: Number,
     default: 0,
@@ -150,7 +142,6 @@ app.post("/signup", async (req, res) => {
 
     // detta använde så att vi så att det verifierades innan ett error, vet inte vad för och nackdelar är.
     // const user = await User.findOne({ username });
-    // const salt = bcrypt.genSaltSync();
 
     // // checks if user already exists, if user exists - asks user to sign-in instead
     // if (user) {
@@ -166,7 +157,6 @@ app.post("/signup", async (req, res) => {
     // if (password.length < X) {
     // 	throw "Password has to be at least X characters";
     // }
-    console.log("before newUser-save");
     const newUser = await new User({
       username: username,
       password: bcrypt.hashSync(password, salt),
@@ -177,37 +167,32 @@ app.post("/signup", async (req, res) => {
       city: city,
     }).save();
 
-    console.log(newUser);
-
     res.status(201).json({
-      response: {
-        userId: newUser._id,
-        username: newUser.username,
-        firstName: newUser.name.firstName,
-        lastName: newUser.name.lastName,
-        email: newUser.email,
-        location: newUser.location.country,
-        // role: newUser.role.description,
-        //kan vi skicka detta? hur?
-        accessToken: newUser.accessToken,
-      },
+      response: newUser,
       success: true,
     });
   } catch (error) {
-    // if (error.code === 11000) {
-    // 	res.status(400).json({
-    // 		response: error,
-    // 		message:
-    // 			"This username is already registered. Please choose another one or login.",
-    // 		success: false,
-    // 	});
-    // } else {
-    res.status(400).json({
-      response: error,
-      message: "Something went wrong...",
-      success: false,
-    });
-    // }
+    if (error.code === 11000 && error.keyValue.username) {
+      res.status(400).json({
+        response: error,
+        message:
+          "This username is already registered. Please choose another one or login.",
+        success: false,
+      });
+    } else if (error.code === 11000 && error.keyValue.email) {
+      res.status(400).json({
+        response: error,
+        message:
+          "This email is already registered. Please choose another one or login.",
+        success: false,
+      });
+    } else {
+      res.status(400).json({
+        response: error,
+        message: "Something went wrong...",
+        success: false,
+      });
+    }
   }
 });
 
