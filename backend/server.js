@@ -14,6 +14,7 @@ mongoose.connect(mongoUrl, {
 });
 mongoose.Promise = Promise;
 
+// jag tog bort att det var nested, när jag läste på lite om det förstod jag det som att man först måste spara model för det (tex location.model) och sen spara den i User. Vi kan väl fundera lite på vad som blir bäst!
 const UserSchema = new mongoose.Schema({
   username: {
     type: String,
