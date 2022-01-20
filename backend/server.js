@@ -66,6 +66,7 @@ const UserSchema = new mongoose.Schema({
   role: {
     type: mongoose.Schema.Types.ObjectId,
     ref: "Role",
+    default: "61e95bd14939b35474753bad",
   },
 });
 
@@ -174,18 +175,14 @@ app.post("/signup", async (req, res) => {
       success: true,
     });
   } catch (error) {
-    if (error.code === 11000 && error.keyValue.username) {
+    if (
+      (error.code === 11000 && error.keyValue.username) ||
+      (error.code === 11000 && error.keyValue.email)
+    ) {
       res.status(400).json({
         response: error,
         message:
-          "This username is already registered. Please choose another one or login.",
-        success: false,
-      });
-    } else if (error.code === 11000 && error.keyValue.email) {
-      res.status(400).json({
-        response: error,
-        message:
-          "This email is already registered. Please choose another one or login.",
+          "This username or email is already registered. Please choose another one or login.",
         success: false,
       });
     } else {
