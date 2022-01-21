@@ -1,6 +1,6 @@
 import mongoose from "mongoose";
 
-const TaskSchema = mongoose.Schema({
+const FactSchema = mongoose.Schema({
   title: {
     type: String,
     required: true,
@@ -11,10 +11,6 @@ const TaskSchema = mongoose.Schema({
   },
   category: {
     type: String,
-    required: true,
-  },
-  points: {
-    type: Number,
     required: true,
   },
   source: {
@@ -31,6 +27,6 @@ const TaskSchema = mongoose.Schema({
   },
 });
 
-const Task = mongoose.model("Task", TaskSchema);
+const Fact = mongoose.model("Fact", FactSchema);
 
-export default Task;
+export default Fact;
