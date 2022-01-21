@@ -1,21 +1,6 @@
 import mongoose from "mongoose";
 
-const CheckedTasksSchema = new mongoose.Schema({
-  description: {
-    type: String,
-    maxlength: 140,
-  },
-  country: {
-    type: String,
-    required: true,
-  },
-  city: {
-    type: String,
-  },
-  score: {
-    type: Number,
-    default: 0,
-  },
+const CheckedTaskSchema = new mongoose.Schema({
   checkedAt: {
     type: Date,
     default: () => Date.now(),
@@ -24,8 +9,12 @@ const CheckedTasksSchema = new mongoose.Schema({
     type: mongoose.Schema.Types.ObjectId,
     ref: "User",
   },
+  task: {
+    type: mongoose.Schema.Types.ObjectId,
+    ref: "Task",
+  },
 });
 
-const CheckedTask = mongoose.model("CheckedTask", CheckedTasksSchema);
+const CheckedTask = mongoose.model("CheckedTask", CheckedTaskSchema);
 
 export default CheckedTask;
