@@ -33,6 +33,9 @@ const user = createSlice({
 		setLastName: (store, action) => {
 			store.lastName = action.payload;
 		},
+		setDescription: (store, action) => {
+			store.description = action.payload;
+		},
 		setEmail: (store, action) => {
 			store.email = action.payload;
 		},
@@ -71,6 +74,8 @@ export const fetchUser = (username) => {
 						dispatch(user.actions.setUserId(data.response.userId));
 						dispatch(user.actions.setUsername(data.response.username));
 						dispatch(user.actions.setFirstName(data.response.firstName));
+						dispatch(user.actions.setLastName(data.response.lastName));
+						dispatch(user.actions.setDescription(data.response.description));
 						dispatch(user.actions.setEmail(data.response.email));
 						dispatch(user.actions.setCountry(data.response.country));
 						dispatch(user.actions.setCity(data.response.city));
@@ -85,6 +90,8 @@ export const fetchUser = (username) => {
 						dispatch(user.actions.setUserId(null));
 						dispatch(user.actions.setUsername(null));
 						dispatch(user.actions.setFirstName(null));
+						dispatch(user.actions.setLastName(null));
+						dispatch(user.actions.setDescription(null));
 						dispatch(user.actions.setEmail(null));
 						dispatch(user.actions.setCountry(null));
 						dispatch(user.actions.setCity(null));
