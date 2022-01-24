@@ -1,11 +1,56 @@
 [
-  {
-    "title": "",
-    "description": "",
-    "category": "",
-    "points": 1,
-    "source": "",
-    "createdAt": "",
-    "updatedAt": ""
-  }
+	{
+		"title": "Tvätta i låga gradtal",
+		"description": "Tvätta i 30 eller 40 grader istället för 60 grader, så ofta som möjligt. Detta nästan halverar energianvändningen.",
+		"category": "Hem och hushåll",
+		"points": 2,
+		"source": "https://www.wwf.se/klimat/det-har-kan-du-gora/",
+		"createdAt": "2022-01-24",
+		"updatedAt": "2022-01-24"
+	},
+	{
+		"title": "Cykla till jobbet",
+		"description": "Cykla till jobbet. Transporter och privat bilåkande står enligt Naturvårdsverket för en tredjedel av Sveriges utsläpp av växthusgaser. ",
+		"category": "Resor och transport",
+		"points": 3,
+		"source": "https://www.wwf.se/klimat/det-har-kan-du-gora/",
+		"createdAt": "2022-01-24",
+		"updatedAt": "2022-01-24"
+	},
+	{
+		"title": "Åk kollektivt till jobbet",
+		"description": "Åk kollektivt till jobbet. Transporter och privat bilåkande står enligt Naturvårdsverket för en tredjedel av Sveriges utsläpp av växthusgaser. ",
+		"category": "Resor och transport",
+		"points": 2,
+		"source": "https://www.wwf.se/klimat/det-har-kan-du-gora/",
+		"createdAt": "2022-01-24",
+		"updatedAt": "2022-01-24"
+	},
+	{
+		"title": "Ät vegetariskt",
+		"description": "Ät endast vegetarisk mat en hel dag. Enligt Jordbruksverket står animaliska produkter, som kött, mjölk och ost, för en femtedel av de globala utsläppen av växthusgaser.",
+		"category": "Mat och dryck",
+		"points": 2,
+		"source": "https://www.wwf.se/klimat/det-har-kan-du-gora/",
+		"createdAt": "2022-01-24",
+		"updatedAt": "2022-01-24"
+	},
+	{
+		"title": "Köp begagnat",
+		"description": "Behöver du köpa något? Införskaffa det begagnat! Vår konsumtion av nya prylar står för en väsentlig andel av våra växthusgasutsläpp genom de industrier som tillverkar dem.",
+		"category": "Resor och transport",
+		"points": 3,
+		"source": "https://www.wwf.se/klimat/det-har-kan-du-gora/",
+		"createdAt": "2022-01-24",
+		"updatedAt": "2022-01-24"
+	},
+	{
+		"title": "Hyr prylen",
+		"description": "Istället för att köpa en pryl, hyr den! Vår konsumtion av nya prylar står för en väsentlig andel av våra växthusgasutsläpp genom de industrier som tillverkar dem.",
+		"category": "Resor och transport",
+		"points": 4,
+		"source": "https://www.wwf.se/klimat/det-har-kan-du-gora/",
+		"createdAt": "2022-01-24",
+		"updatedAt": "2022-01-24"
+	}
 ]

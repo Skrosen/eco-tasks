@@ -6,6 +6,7 @@ import listEndpoints from "express-list-endpoints";
 
 import User from "./models/User.js";
 import Role from "./models/Role.js";
+import Task from "./models/Task.js";
 import CheckedTask from "./models/CheckedTask.js";
 
 const mongoUrl =
@@ -255,7 +256,7 @@ app.get("/information", async (req, res) => {
 	}
 });
 
-app.get("/tasks", authenticateUser);
+// app.get("/tasks", authenticateUser);
 app.get("/tasks", async (req, res) => {
 	const allTasks = await Task.find();
 	try {
@@ -273,7 +274,7 @@ app.get("/tasks", async (req, res) => {
 });
 
 // Endpoint for showing profile page
-app.get("/user/:username", authenticateUser);
+// app.get("/user/:username", authenticateUser);
 app.get("/user/:username", async (req, res) => {
 	const username = req.params.username;
 
