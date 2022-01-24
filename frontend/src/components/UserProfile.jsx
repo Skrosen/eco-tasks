@@ -1,10 +1,27 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { useParams } from "react-router-dom";
+import { useDispatch, useSelector } from "react-redux";
+
+import { fetchUser } from "../reducers/user";
 
 const UserProfile = () => {
-	const { user } = useParams();
+	const dispatch = useDispatch();
 
-	return <h1>{user}</h1>;
+	const { username } = useParams();
+
+	const user = useSelector((store) => store.user);
+
+	useEffect(() => {
+		dispatch(fetchUser(username));
+	}, []);
+	console.log(user);
+	return (
+		<>
+			<h1>Welcome {user.username}</h1>
+			<p>email:{user.email}</p>
+			<p>score:{user.score}</p>
+		</>
+	);
 };
 
 export default UserProfile;
