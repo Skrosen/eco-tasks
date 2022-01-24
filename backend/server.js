@@ -6,6 +6,7 @@ import listEndpoints from "express-list-endpoints";
 
 import User from "./models/User.js";
 import Role from "./models/Role.js";
+import CheckedTask from "./models/CheckedTask.js";
 
 const mongoUrl =
 	process.env.MONGO_URL || "mongodb://localhost/eco-friendly-api";
@@ -254,9 +255,26 @@ app.get("/information", async (req, res) => {
 	}
 });
 
+app.get("/tasks", authenticateUser);
+app.get("/tasks", async (req, res) => {
+	const allTasks = await Task.find();
+	try {
+		res.status(200).json({
+			response: allTasks,
+			success: true,
+		});
+	} catch (error) {
+		res.status(400).json({
+			response: error,
+			message: "Something went wrong...",
+			success: false,
+		});
+	}
+});
+
 // Endpoint for showing profile page
-app.get("/:username", authenticateUser);
-app.get("/:username", async (req, res) => {
+app.get("/user/:username", authenticateUser);
+app.get("/user/:username", async (req, res) => {
 	const username = req.params.username;
 
 	try {
@@ -266,6 +284,7 @@ app.get("/:username", async (req, res) => {
 				username: user.username,
 				firstName: user.firstName,
 				lastName: user.lastName,
+				description: user.description,
 				email: user.email,
 				country: user.country,
 				city: user.city,
@@ -283,13 +302,22 @@ app.get("/:username", async (req, res) => {
 });
 
 // Endpoint for tasks
-app.get("/:username/tasks", authenticateUser);
-app.get("/:username/tasks", async (req, res) => {
+app.get("/user/:username/tasks", authenticateUser);
+app.get("/user/:username/tasks", async (req, res) => {
+	const username = req.params.username;
+	const tasks = req.query;
 	try {
+		const user = await User.findOne({ username: username });
+		const checkedTasks = await CheckedTask.find();
+
+		res.status(200).json({
+			response: {},
+			success: true,
+		});
 	} catch {
 		res.status(400).json({
 			response: error,
-			message: "Something went wrong...",
+			message: "Something went wrong while trying to find tasks...",
 			success: false,
 		});
 	}
