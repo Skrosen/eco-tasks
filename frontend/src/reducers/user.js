@@ -21,44 +21,22 @@ const user = createSlice({
 		error: null,
 	},
 	reducers: {
-		setUserId: (store, action) => {
-			store.userId = action.payload;
-		},
-		setUsername: (store, action) => {
-			store.username = action.payload;
-		},
-		setFirstName: (store, action) => {
-			store.firstName = action.payload;
-		},
-		setLastName: (store, action) => {
-			store.lastName = action.payload;
-		},
-		setDescription: (store, action) => {
-			store.description = action.payload;
-		},
-		setEmail: (store, action) => {
-			store.email = action.payload;
-		},
-		setCountry: (store, action) => {
-			store.country = action.payload;
-		},
-		setCity: (store, action) => {
-			store.city = action.payload;
-		},
-		setRole: (store, action) => {
-			store.role = action.payload;
-		},
-		setScore: (store, action) => {
-			store.score = action.payload;
-		},
-		setCreatedAt: (store, action) => {
-			store.createdAt = action.payload;
-		},
-		setAccessToken: (store, action) => {
-			store.accessToken = action.payload;
+		setUserInfo: (store, action) => {
+			store.userId = action.payload.id;
+			store.username = action.payload.username;
+			store.firstName = action.payload.firstName;
+			store.lastName = action.payload.lastName;
+			store.description = action.payload.description;
+			store.email = action.payload.email;
+			store.country = action.payload.country;
+			store.city = action.payload.city;
+			store.role = action.payload.role;
+			store.score = action.payload.score;
+			store.createdAt = action.payload.createdAt;
+			store.accessToken = action.payload.accessToken;
 		},
 		setError: (store, action) => {
-			store.error = action.payload;
+			store.error = action.payload.error;
 		},
 	},
 });

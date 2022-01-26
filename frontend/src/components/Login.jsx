@@ -37,7 +37,13 @@ const TextInput = styled.input`
 const Login = () => {
 	const [username, setUsername] = useState("");
 	const [password, setPassword] = useState("");
-	const [mode, setMode] = useState("signup");
+	const [firstName, setFirstName] = useState("");
+	const [lastName, setLastName] = useState("");
+	const [description, setDescription] = useState("");
+	const [email, setEmail] = useState("");
+	const [country, setCountry] = useState("");
+	const [city, setCity] = useState("");
+	const [mode, setMode] = useState("sign-up");
 
 	const accessToken = useSelector((store) => store.user.accessToken);
 
@@ -53,36 +59,47 @@ const Login = () => {
 
 	const onFormSubmit = (event) => {
 		event.preventDefault();
+		let options = {};
 
-		const options = {
-			method: "POST",
-			headers: {
-				"Content-Type": "application/json",
-			},
-			body: JSON.stringify({ username, password }),
-		};
+		if (mode === "sign-up") {
+			options = {
+				method: "POST",
+				headers: {
+					"Content-Type": "application/json",
+				},
+				body: JSON.stringify({
+					username,
+					password,
+					firstName,
+					lastName,
+					description,
+					email,
+					country,
+					city,
+				}),
+			};
+		} else {
+			options = {
+				method: "POST",
+				headers: {
+					"Content-Type": "application/json",
+				},
+				body: JSON.stringify({ username, password }),
+			};
+		}
 
 		fetch(API_URL(mode), options)
 			.then((res) => res.json())
 			.then((data) => {
-				if (data.success) {
-					batch(() => {
-						dispatch(user.actions.setUserId(data.response.userId));
-						dispatch(user.actions.setUsername(data.response.username));
-						dispatch(user.actions.setAccessToken(data.response.accessToken));
-						dispatch(user.actions.setError(null));
-					});
-					mode === "signup" &&
-						alert(
-							`Welcome ${data.response.username}, your account has been created and you are now logged in!`
-						); // welcomes new users who just signed up
+				if (data.success && mode === "sign-up") {
+					alert(
+						`Welcome ${data.response.username}, your account has been created!`
+					); // welcomes new users who just signed up
+				} else if (data.success && mode === "login") {
+					console.log(data.response);
+					dispatch(user.actions.setUserInfo(data.response));
 				} else {
-					batch(() => {
-						dispatch(user.actions.setUserId(null));
-						dispatch(user.actions.setUsername(null));
-						dispatch(user.actions.setAccessToken(null));
-						dispatch(user.actions.setError(data.response));
-					});
+					// dispatch(user.actions.setError(data.response));
 					alert(data.response); // returns error message
 				}
 			});
@@ -91,19 +108,19 @@ const Login = () => {
 	return (
 		<LoginContainer>
 			<ModeContainer>
-				<label htmlFor="signup">Sign-up</label>
+				<label htmlFor="sign-up">Sign-up</label>
 				<input
-					id="signup"
+					id="sign-up"
 					type="radio"
-					checked={mode === "signup"}
-					onChange={() => setMode("signup")}
+					checked={mode === "sign-up"}
+					onChange={() => setMode("sign-up")}
 				/>
-				<label htmlFor="signin">Sign-in</label>
+				<label htmlFor="login">Login</label>
 				<input
-					id="signin"
+					id="login"
 					type="radio"
-					checked={mode === "signin"}
-					onChange={() => setMode("signin")}
+					checked={mode === "login"}
+					onChange={() => setMode("login")}
 				/>
 			</ModeContainer>
 			<Form onSubmit={onFormSubmit}>
@@ -123,7 +140,59 @@ const Login = () => {
 					value={password}
 					onChange={(e) => setPassword(e.target.value)}
 				/>
-				<Button type="submit">Submit</Button>
+				{mode === "sign-up" && (
+					<>
+						<label htmlFor="firstName"></label>
+						<TextInput
+							id="firstName"
+							type="text"
+							placeholder="First name"
+							value={firstName}
+							onChange={(e) => setFirstName(e.target.value)}
+						/>
+						<label htmlFor="lastName"></label>
+						<TextInput
+							id="lastName"
+							type="text"
+							placeholder="Last name"
+							value={lastName}
+							onChange={(e) => setLastName(e.target.value)}
+						/>
+						<label htmlFor="description"></label>
+						<TextInput
+							id="description"
+							type="text"
+							placeholder="Write something about yourself"
+							value={description}
+							onChange={(e) => setDescription(e.target.value)}
+						/>
+						<label htmlFor="email"></label>
+						<TextInput
+							id="email"
+							type="email"
+							placeholder="example@example.com"
+							value={email}
+							onChange={(e) => setEmail(e.target.value)}
+						/>
+						<label htmlFor="country"></label>
+						<TextInput
+							id="country"
+							type="text"
+							placeholder="Country"
+							value={country}
+							onChange={(e) => setCountry(e.target.value)}
+						/>
+						<label htmlFor="city"></label>
+						<TextInput
+							id="city"
+							type="text"
+							placeholder="City"
+							value={city}
+							onChange={(e) => setCity(e.target.value)}
+						/>
+					</>
+				)}
+				<Button type="submit" text={mode} />
 			</Form>
 		</LoginContainer>
 	);
