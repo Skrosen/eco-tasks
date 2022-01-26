@@ -310,12 +310,13 @@ app.get("/user/:userId", async (req, res) => {
 app.post("/user/:userId/checktask", async (req, res) => {
   const userId = req.params.userId;
   const { taskId } = req.body;
+  console.log(taskId);
   try {
     const user = await User.findOne({ _id: userId });
     if (user) {
       const checkedTask = await new CheckedTask({
         userId: userId,
-        task: taskId,
+        taskId: taskId,
       }).save();
 
       res.status(200).json({
@@ -337,20 +338,60 @@ app.post("/user/:userId/checktask", async (req, res) => {
   }
 });
 
-// //using mongo operator to increase, $inc.  new is used to give back the latest count
-// app.post("/thoughts/:messageId/like", async (req, res) => {
-// 	const { messageId } = req.params;
-// 	try {
-// 		const updatedLike = await Thought.findByIdAndUpdate(
-// 			messageId,
-// 			{ $inc: { hearts: 1 } },
-// 			{ new: true }
-// 		);
-// 		res.status(200).json({ response: updatedLike, success: true });
-// 	} catch (error) {
-// 		res.status(400).json({ response: error, success: false });
-// 	}
-// });
+// endpoint for deleting a task that has been checked as done
+// app.delete("/user/:userId/checktask", authenticateUser);
+app.delete("/user/:userId/deleteTask", async (req, res) => {
+  const { checkedTaskId } = req.body;
+
+  try {
+    const deletedTask = await CheckedTask.deleteOne({
+      _id: checkedTaskId,
+    });
+    res.status(200).json({
+      response: deletedTask,
+      message: "Task deleted successfully",
+      success: true,
+    });
+  } catch (error) {
+    res.status(400).json({
+      response: error,
+      message: "Something went wrong while trying to delete task...",
+      success: false,
+    });
+  }
+});
+
+//using mongo operator to increase, $inc.  new is used to give back the latest count
+// app.patch("/user/:userId/", authenticateUser);
+app.patch("/user/:userId/score", async (req, res) => {
+  const { userId } = req.params;
+  const { taskId } = req.body;
+
+  try {
+    const task = await Task.findById({
+      _id: taskId,
+    });
+    console.log("task", task);
+    const taskScore = task.score;
+    console.log("taskScore", taskScore);
+
+    if (taskScore) {
+      const updatedScore = await User.findByIdAndUpdate(
+        userId,
+        { $inc: { score: taskScore } },
+        { new: true }
+      );
+      res.status(200).json({ response: updatedScore, success: true });
+    } else {
+      res.status(404).json({
+        message: "Task not found",
+        success: false,
+      });
+    }
+  } catch (error) {
+    res.status(400).json({ response: error, success: false });
+  }
+});
 
 // Start the server
 app.listen(port, () => {

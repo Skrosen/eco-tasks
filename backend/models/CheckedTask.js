@@ -9,7 +9,7 @@ const CheckedTaskSchema = new mongoose.Schema({
     type: mongoose.Schema.Types.ObjectId,
     ref: "User",
   },
-  task: {
+  taskId: {
     type: mongoose.Schema.Types.ObjectId,
     ref: "Task",
   },
