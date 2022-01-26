@@ -67,20 +67,8 @@ app.get("/", (req, res) => {
   });
 });
 
-// Endpoint for adding new roles
-app.post("/role", async (req, res) => {
-  const { description } = req.body;
-
-  try {
-    const newRole = await new Role({ description }).save();
-    res.status(201).json({ response: newRole, success: true });
-  } catch (error) {
-    res.status(400).json({ response: error, success: false });
-  }
-});
-
 // Endpoint for signing up
-app.post("/signup", async (req, res) => {
+app.post("/sign-up", async (req, res) => {
   const {
     username,
     password,
@@ -176,29 +164,167 @@ app.post("/login", async (req, res) => {
   }
 });
 
-// Endpoint to delete account
-app.delete("/deleteuser", authenticateUser);
-app.delete("/deleteuser", async (req, res) => {
-  const { username, password } = req.body;
-  try {
-    const user = await User.findOne({ username });
+// Endpoint for showing profile page
+app.get("/user/:userId", authenticateUser);
+app.get("/user/:userId", async (req, res) => {
+  const userId = req.params.userId;
 
-    if (user && bcrypt.compareSync(password, user.password)) {
-      await User.deleteOne({ username });
+  try {
+    const user = await User.findOne({ _id: userId });
+    res.status(200).json({
+      response: {
+        username: user.username,
+        firstName: user.firstName,
+        lastName: user.lastName,
+        description: user.description,
+        email: user.email,
+        country: user.country,
+        city: user.city,
+        score: user.score,
+        createdAt: user.createdAt,
+      },
+      success: true,
+    });
+  } catch (error) {
+    res.status(400).json({
+      response: error,
+      message: "Something went wrong...",
+      success: false,
+    });
+  }
+});
+
+//using mongo operator to increase, $inc.  new is used to give back the latest count
+// app.patch("/user/:userId/score", authenticateUser);
+app.patch("/user/:userId/score", async (req, res) => {
+  const { userId } = req.params;
+  const { taskId } = req.body;
+
+  try {
+    const task = await Task.findById({
+      _id: taskId,
+    });
+    console.log("task", task);
+    const taskScore = task.score;
+    console.log("taskScore", taskScore);
+
+    if (taskScore) {
+      const updatedScore = await User.findByIdAndUpdate(
+        userId,
+        { $inc: { score: taskScore } },
+        { new: true }
+      );
+      res.status(200).json({ response: updatedScore, success: true });
+    } else {
+      res.status(404).json({
+        message: "Task not found",
+        success: false,
+      });
+    }
+  } catch (error) {
+    res.status(400).json({ response: error, success: false });
+  }
+});
+
+// Endpoint to delete account
+app.delete("/user/:userId", authenticateUser);
+app.delete("/user/:userId", async (req, res) => {
+  const userId = req.params.userId;
+
+  try {
+    await User.deleteOne({ _id: userId });
+    res.status(200).json({
+      message: "User is deleted",
+      success: true,
+    });
+  } catch (error) {
+    res.status(400).json({
+      response: error,
+      message: "Something went wrong...",
+      success: false,
+    });
+  }
+});
+
+// Endpoint for adding new roles
+app.post("/roles", async (req, res) => {
+  const { description } = req.body;
+
+  try {
+    const newRole = await new Role({ description }).save();
+    res.status(201).json({ response: newRole, success: true });
+  } catch (error) {
+    res.status(400).json({ response: error, success: false });
+  }
+});
+
+app.get("/tasks/all-tasks", authenticateUser);
+app.get("/tasks/all-tasks", async (req, res) => {
+  const allTasks = await Task.find();
+  try {
+    res.status(200).json({
+      response: allTasks,
+      success: true,
+    });
+  } catch (error) {
+    res.status(400).json({
+      response: error,
+      message: "Something went wrong...",
+      success: false,
+    });
+  }
+});
+
+// Endpoint for checking task
+app.post("/tasks/checked-tasks", authenticateUser);
+app.post("/tasks/checked-tasks", async (req, res) => {
+  const { userId, taskId } = req.body;
+
+  try {
+    const user = await User.findOne({ _id: userId });
+    if (user) {
+      const checkedTask = await new CheckedTask({
+        userId: userId,
+        taskId: taskId,
+      }).save();
+
       res.status(200).json({
-        message: `${username} is deleted`,
+        response: checkedTask,
         success: true,
       });
     } else {
       res.status(404).json({
-        message: "User not found or password incorrect",
+        message: "User not found",
         success: false,
       });
     }
   } catch (error) {
     res.status(400).json({
       response: error,
-      message: "Something went wrong...",
+      message: "Something went wrong while trying to find tasks...",
+      success: false,
+    });
+  }
+});
+
+// endpoint for deleting a task that has been checked as done
+app.delete("/user/checked-tasks", authenticateUser);
+app.delete("/user/checked-tasks", async (req, res) => {
+  const { checkedTaskId } = req.body;
+
+  try {
+    const deletedTask = await CheckedTask.deleteOne({
+      _id: checkedTaskId,
+    });
+    res.status(200).json({
+      response: deletedTask,
+      message: "Task deleted successfully",
+      success: true,
+    });
+  } catch (error) {
+    res.status(400).json({
+      response: error,
+      message: "Something went wrong while trying to delete task...",
       success: false,
     });
   }
@@ -255,141 +381,6 @@ app.get("/information", async (req, res) => {
       message: "Something went wrong...",
       success: false,
     });
-  }
-});
-
-// app.get("/tasks", authenticateUser);
-app.get("/tasks", async (req, res) => {
-  const allTasks = await Task.find();
-  try {
-    res.status(200).json({
-      response: allTasks,
-      success: true,
-    });
-  } catch (error) {
-    res.status(400).json({
-      response: error,
-      message: "Something went wrong...",
-      success: false,
-    });
-  }
-});
-
-// Endpoint for showing profile page
-// app.get("/user/:username", authenticateUser);
-app.get("/user/:userId", async (req, res) => {
-  const userId = req.params.userId;
-
-  try {
-    const user = await User.findOne({ _id: userId });
-    res.status(200).json({
-      response: {
-        username: user.username,
-        firstName: user.firstName,
-        lastName: user.lastName,
-        description: user.description,
-        email: user.email,
-        country: user.country,
-        city: user.city,
-        score: user.score,
-        createdAt: user.createdAt,
-      },
-      success: true,
-    });
-  } catch (error) {
-    res.status(400).json({
-      response: error,
-      message: "Something went wrong...",
-      success: false,
-    });
-  }
-});
-
-// Endpoint for checking task
-// app.post("/user/:userId/checktask", authenticateUser);
-app.post("/user/:userId/checktask", async (req, res) => {
-  const userId = req.params.userId;
-  const { taskId } = req.body;
-  console.log(taskId);
-  try {
-    const user = await User.findOne({ _id: userId });
-    if (user) {
-      const checkedTask = await new CheckedTask({
-        userId: userId,
-        taskId: taskId,
-      }).save();
-
-      res.status(200).json({
-        response: checkedTask,
-        success: true,
-      });
-    } else {
-      res.status(404).json({
-        message: "User not found",
-        success: false,
-      });
-    }
-  } catch (error) {
-    res.status(400).json({
-      response: error,
-      message: "Something went wrong while trying to find tasks...",
-      success: false,
-    });
-  }
-});
-
-// endpoint for deleting a task that has been checked as done
-// app.delete("/user/:userId/checktask", authenticateUser);
-app.delete("/user/:userId/deleteTask", async (req, res) => {
-  const { checkedTaskId } = req.body;
-
-  try {
-    const deletedTask = await CheckedTask.deleteOne({
-      _id: checkedTaskId,
-    });
-    res.status(200).json({
-      response: deletedTask,
-      message: "Task deleted successfully",
-      success: true,
-    });
-  } catch (error) {
-    res.status(400).json({
-      response: error,
-      message: "Something went wrong while trying to delete task...",
-      success: false,
-    });
-  }
-});
-
-//using mongo operator to increase, $inc.  new is used to give back the latest count
-// app.patch("/user/:userId/", authenticateUser);
-app.patch("/user/:userId/score", async (req, res) => {
-  const { userId } = req.params;
-  const { taskId } = req.body;
-
-  try {
-    const task = await Task.findById({
-      _id: taskId,
-    });
-    console.log("task", task);
-    const taskScore = task.score;
-    console.log("taskScore", taskScore);
-
-    if (taskScore) {
-      const updatedScore = await User.findByIdAndUpdate(
-        userId,
-        { $inc: { score: taskScore } },
-        { new: true }
-      );
-      res.status(200).json({ response: updatedScore, success: true });
-    } else {
-      res.status(404).json({
-        message: "Task not found",
-        success: false,
-      });
-    }
-  } catch (error) {
-    res.status(400).json({ response: error, success: false });
   }
 });
 
