@@ -3,6 +3,8 @@ import { BrowserRouter, Routes, Route } from "react-router-dom";
 import { Provider } from "react-redux";
 import { createStore, combineReducers } from "@reduxjs/toolkit";
 
+import Menu from "./components/Menu";
+
 import Main from "./components/Main";
 import Login from "./components/Login";
 import Tasks from "./components/Tasks";
@@ -42,6 +44,7 @@ const App = () => {
 	return (
 		<Provider store={store}>
 			<BrowserRouter>
+				<Menu>Menu</Menu>
 				<Routes>
 					<Route path="/" element={<Main />} />
 					<Route path="/login" element={<Login />} />

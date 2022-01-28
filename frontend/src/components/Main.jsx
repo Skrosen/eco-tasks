@@ -1,12 +1,12 @@
 import React from "react";
 
-import { Button } from "./reusable-components/Button";
+import { Button } from "./reusable-components/Buttons";
 
 const Main = () => {
 	return (
 		<>
-			<h1>Main</h1>
-			<Button text="text" />
+			<h1>Eco Friendly Page</h1>
+			<Button text="click to get random eco-info" />
 		</>
 	);
 };

@@ -1,7 +1,7 @@
 import React from "react";
 import styled from "styled-components/macro";
 
-const Btn = styled.button`
+export const Btn = styled.button`
 	position: relative;
 	display: inline-block;
 	margin: 10px;
@@ -30,6 +30,6 @@ const Btn = styled.button`
 	}
 `;
 
-export const Button = ({ text }) => {
-	return <Btn>{text}</Btn>;
+export const Button = ({ text, onClick }) => {
+	return <Btn onClick={onClick}>{text}</Btn>;
 };

@@ -1,10 +1,34 @@
 [
-  {
-    "title": "",
-    "description": "",
-    "category": "",
-    "source": "",
-    "createdAt": "",
-    "updatedAt": ""
-  }
+	{
+		"title": "Turn it off",
+		"description": "Energy conservation is one of the most important things you can do to reduce your carbon footprint. Leaving your electricals on standby needlessly uses up energy – hit the off switch and you could see huge improvements, most noticeably in your energy bills!",
+		"category": "Home",
+		"source": "https://www.goodenergy.co.uk/the-ultimate-20-step-guide-to-eco-friendly-living/",
+		"createdAt": "",
+		"updatedAt": ""
+	},
+	{
+		"title": "Eat less meat",
+		"description": "Being careful with what you’re consuming is at the heart of being more eco-friendly, and cutting down on the amount of meat you eat can have a huge impact. Not having red meat – even if it’s just for two or three days a week – can have quite a significant impact on reducing your carbon footprint.",
+		"category": "Food",
+		"source": "https://www.goodenergy.co.uk/the-ultimate-20-step-guide-to-eco-friendly-living/",
+		"createdAt": "",
+		"updatedAt": ""
+	},
+	{
+		"title": "Don’t waste food",
+		"description": "Waste not, want not. Did you know that 7.3 million tonnes of food is wasted in the UK every year? This isn’t just a huge waste of food and money, it adds to the amount of CO2 being created in landfills.",
+		"category": "Food",
+		"source": "https://www.goodenergy.co.uk/the-ultimate-20-step-guide-to-eco-friendly-living/",
+		"createdAt": "",
+		"updatedAt": ""
+	},
+	{
+		"title": "Recycle everything",
+		"description": "Chances are that if you’re thinking about taking on a more eco-friendly lifestyle then you’ll already be recycling. But could you improve your recycling-ability (now a word)? You can recycle almost everything, from batteries to paper to cars. Before you throw it away, take a minute to find out if you could recycle it instead. ",
+		"category": "Recycle",
+		"source": "https://www.goodenergy.co.uk/the-ultimate-20-step-guide-to-eco-friendly-living/",
+		"createdAt": "",
+		"updatedAt": ""
+	}
 ]

@@ -3,23 +3,25 @@ import { batch } from "react-redux";
 
 import { API_URL } from "../utils/urls";
 
+const initialState = {
+	userId: null,
+	username: null,
+	firstName: null,
+	lastName: null,
+	email: null,
+	country: null,
+	city: null,
+	role: null,
+	description: null,
+	score: null,
+	createdAt: null,
+	accessToken: null,
+	error: null,
+};
+
 const user = createSlice({
 	name: "user",
-	initialState: {
-		userId: null,
-		username: null,
-		firstName: null,
-		lastName: null,
-		email: null,
-		country: null,
-		city: null,
-		role: null,
-		description: null,
-		score: null,
-		createdAt: null,
-		accessToken: null,
-		error: null,
-	},
+	initialState,
 	reducers: {
 		setUserInfo: (store, action) => {
 			store.userId = action.payload.id;
@@ -37,6 +39,9 @@ const user = createSlice({
 		},
 		setError: (store, action) => {
 			store.error = action.payload.error;
+		},
+		setInitialState: (store, action) => {
+			return initialState;
 		},
 	},
 });
