@@ -47,9 +47,9 @@ const user = createSlice({
 });
 export default user;
 
-export const fetchUser = (username) => {
+export const fetchUser = (userId) => {
 	return (dispatch) => {
-		fetch(API_URL(`user/${username}`))
+		fetch(API_URL(`user/${userId}`))
 			.then((res) => res.json())
 			.then((data) => {
 				if (data.success) {

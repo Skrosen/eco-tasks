@@ -11,18 +11,19 @@ export const Btn = styled.button`
 	font-size: 24px;
 	letter-spacing: 1px;
 	text-decoration: none;
-	color: rgb(114, 84, 38);
-	background: rgba(114, 84, 38, 0.3);
+	color: rgb(3, 3, 3);
+	background: rgba(215, 255, 217, 0.3);
 	cursor: pointer;
 	transition: ease-out 0.5s;
 	border-radius: 30px;
-	border: 2px solid rgb(114, 84, 38);
+	border: 2px solid;
+	border-color: rgb(117, 164, 120);
 	border-radius: 10px;
-	box-shadow: inset 0 0 0 0 rgb(114, 84, 38);
+	box-shadow: inset 0 0 0 0 rgb(117, 164, 120);
 
 	&:hover {
-		color: white;
-		box-shadow: inset 0 -100px 0 0 rgb(114, 84, 38);
+		color: rgb(255, 248, 225);
+		box-shadow: inset 0 -100px 0 0 rgb(117, 164, 120);
 	}
 
 	&:active {

@@ -1,6 +1,7 @@
 import { createSlice } from "@reduxjs/toolkit";
 import { ui } from "./ui";
 import { API_URL } from "../utils/urls";
+import { useSelector } from "react-redux";
 
 const tasks = createSlice({
 	name: "tasks",
@@ -36,12 +37,17 @@ const tasks = createSlice({
 	},
 });
 
-export const fetchTasks = () => {
+export const fetchTasks = (accessToken) => {
+	console.log("acessTOken", accessToken);
+	const options = {
+		headers: { Authorization: accessToken },
+	};
 	return (dispatch) => {
 		dispatch(ui.actions.setLoading(true));
-		fetch(API_URL("tasks"))
+		fetch(API_URL("tasks/all-tasks"), options)
 			.then((res) => res.json())
 			.then((json) => {
+				console.log(json);
 				dispatch(tasks.actions.setTasks(json));
 				dispatch(ui.actions.setLoading(false));
 			});

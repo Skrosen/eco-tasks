@@ -5,10 +5,13 @@ import { fetchTasks } from "../reducers/tasks";
 
 const Tasks = () => {
 	const dispatch = useDispatch();
+	const accessToken = useSelector((store) => store.user.accessToken);
 	const tasks = useSelector((store) => store?.tasks?.tasks?.response);
+
 	useEffect(() => {
-		dispatch(fetchTasks());
+		dispatch(fetchTasks(accessToken));
 	}, []);
+
 	return (
 		<>
 			<h1>Tasks hello</h1>

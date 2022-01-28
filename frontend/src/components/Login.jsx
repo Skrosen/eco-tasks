@@ -45,7 +45,8 @@ const Login = () => {
 		event.preventDefault();
 		let options = {};
 
-		if (mode === "sign-up") {
+		if (tabIndex === 0) {
+			setMode("sign-up");
 			options = {
 				method: "POST",
 				headers: {
@@ -63,6 +64,7 @@ const Login = () => {
 				}),
 			};
 		} else {
+			setMode("login");
 			options = {
 				method: "POST",
 				headers: {
@@ -75,13 +77,29 @@ const Login = () => {
 		fetch(API_URL(mode), options)
 			.then((res) => res.json())
 			.then((data) => {
-				if (data.success && mode === "sign-up") {
+				if (data.success && tabIndex === 0) {
 					alert(
 						`Welcome ${data.response.username}, your account has been created!`
 					); // welcomes new users who just signed up
-				} else if (data.success && mode === "login") {
+					setUsername("");
+					setPassword("");
+					setFirstName("");
+					setLastName("");
+					setDescription("");
+					setEmail("");
+					setCountry("");
+					setCity("");
+				} else if (data.success && tabIndex === 1) {
 					console.log(data.response);
 					dispatch(user.actions.setUserInfo(data.response));
+					setUsername("");
+					setPassword("");
+					setFirstName("");
+					setLastName("");
+					setDescription("");
+					setEmail("");
+					setCountry("");
+					setCity("");
 				} else {
 					// dispatch(user.actions.setError(data.response));
 					alert(data.response); // returns error message
@@ -167,7 +185,7 @@ const Login = () => {
 							value={city}
 							onChange={(e) => setCity(e.target.value)}
 						/>
-						<Button type="submit" text={mode} />
+						<Button type="submit" text="sign-up" />
 					</Form>
 				</TabPanel>
 				<TabPanel>
@@ -188,7 +206,7 @@ const Login = () => {
 							value={password}
 							onChange={(e) => setPassword(e.target.value)}
 						/>
-						<Button type="submit" text={mode} />
+						<Button type="submit" text="login" />
 					</Form>
 				</TabPanel>
 			</Tabs>

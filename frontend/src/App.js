@@ -1,7 +1,15 @@
 import React from "react";
+import thunkMiddleware from "redux-thunk";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import { Provider } from "react-redux";
-import { createStore, combineReducers } from "@reduxjs/toolkit";
+import {
+	createStore,
+	combineReducers,
+	compose,
+	applyMiddleware,
+} from "@reduxjs/toolkit";
+
+import { GlobalStyle } from "./components/reusable-components/GlobalStyles";
 
 import Menu from "./components/Menu";
 
@@ -21,28 +29,29 @@ const reducer = combineReducers({
 	tasks: tasks.reducer,
 });
 
-// Retrieve localstorage as initial state
-const persistedStateJSON = localStorage.getItem("userReduxState");
-let persistedState = {};
+const persistedStateJSON = localStorage.getItem("myAppReduxState");
+const persistedState = persistedStateJSON ? JSON.parse(persistedStateJSON) : {};
 
-if (persistedStateJSON) {
-	persistedState = JSON.parse(persistedStateJSON);
-}
+const composedEnhancers =
+	(process.env.NODE_ENV !== "production" &&
+		typeof window !== "undefined" &&
+		window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__) ||
+	compose;
 
 const store = createStore(
 	reducer,
 	persistedState,
-	window.__REDUX_DEVTOOLS_EXTENSION__ && window.__REDUX_DEVTOOLS_EXTENSION__()
+	composedEnhancers(applyMiddleware(thunkMiddleware))
 );
 
-// Store the state in localstorage when Redux state change
 store.subscribe(() => {
-	localStorage.setItem("userReduxState", JSON.stringify(store.getState()));
+	localStorage.setItem("myAppReduxState", JSON.stringify(store.getState()));
 });
 
 const App = () => {
 	return (
 		<Provider store={store}>
+			<GlobalStyle />
 			<BrowserRouter>
 				<Menu>Menu</Menu>
 				<Routes>
