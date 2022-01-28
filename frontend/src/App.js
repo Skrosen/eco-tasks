@@ -19,6 +19,7 @@ import Tasks from "./components/Tasks";
 import Leaderboard from "./components/LeaderBoard";
 import InfoPage from "./components/InfoPage";
 import UserProfile from "./components/UserProfile";
+import UserSearch from "./components/UserProfile";
 import NotFound from "./components/NotFound";
 
 import user from "./reducers/user";
@@ -60,7 +61,8 @@ const App = () => {
 					<Route path="/eco-information" element={<InfoPage />} />
 					<Route path="/leaderboard" element={<Leaderboard />} />
 					<Route path="/tasks" element={<Tasks />} />
-					<Route path="/user/:username" element={<UserProfile />} />
+					<Route path="/userprofile" element={<UserProfile />} />
+					<Route path="/user/:username" element={<UserSearch />} />
 					<Route path="/*" element={<NotFound />} />
 				</Routes>
 			</BrowserRouter>

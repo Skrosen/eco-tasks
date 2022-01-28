@@ -24,7 +24,7 @@ const user = createSlice({
 	initialState,
 	reducers: {
 		setUserInfo: (store, action) => {
-			store.userId = action.payload.id;
+			store.userId = action.payload.userId;
 			store.username = action.payload.username;
 			store.firstName = action.payload.firstName;
 			store.lastName = action.payload.lastName;
@@ -47,9 +47,12 @@ const user = createSlice({
 });
 export default user;
 
-export const fetchUser = (userId) => {
+export const fetchUser = (userId, accessToken) => {
+	const options = {
+		headers: { Authorization: accessToken },
+	};
 	return (dispatch) => {
-		fetch(API_URL(`user/${userId}`))
+		fetch(API_URL(`user/${userId}`), options)
 			.then((res) => res.json())
 			.then((data) => {
 				if (data.success) {
