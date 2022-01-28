@@ -8,6 +8,7 @@ import User from "./models/User.js";
 import Role from "./models/Role.js";
 import Task from "./models/Task.js";
 import CheckedTask from "./models/CheckedTask.js";
+import Fact from "./models/EnviroFact.js";
 
 const mongoUrl =
 	process.env.MONGO_URL || "mongodb://localhost/eco-friendly-api";
@@ -148,6 +149,14 @@ app.post("/login", async (req, res) => {
 				response: {
 					userId: user._id,
 					username: user.username,
+					firstName: user.firstName,
+					lastName: user.lastName,
+					description: user.description,
+					email: user.email,
+					country: user.country,
+					city: user.city,
+					score: user.score,
+					createdAt: user.createdAt,
 					accessToken: user.accessToken,
 				},
 				success: true,
@@ -372,9 +381,11 @@ app.get("/leaderboard", async (req, res) => {
 // Endpoint for information, only for authenticated users
 app.get("/information", authenticateUser);
 app.get("/information", async (req, res) => {
+	const allFacts = await Fact.find();
+
 	try {
 		res.status(200).json({
-			response,
+			response: allFacts,
 			success: true,
 		});
 	} catch (error) {
