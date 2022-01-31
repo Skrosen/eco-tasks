@@ -290,7 +290,6 @@ app.get("/tasks/all-tasks", async (req, res) => {
 app.post("/tasks/checked-tasks", authenticateUser);
 app.post("/tasks/checked-tasks", async (req, res) => {
 	const { userId, taskId } = req.body;
-	console.log("post checking task", userId);
 
 	try {
 		const user = await User.findById(userId);
@@ -325,8 +324,10 @@ app.get("/tasks/checked-tasks", async (req, res) => {
 	const userId = req.header("userId");
 
 	try {
-		const allCheckedTasks = await CheckedTask.find().populate("taskId");
-		console.log("alla checkade", allCheckedTasks);
+		const allCheckedTasks = await CheckedTask.find()
+			.populate("taskId")
+			.populate("userId");
+
 		if (allCheckedTasks) {
 			res.status(200).json({
 				response: allCheckedTasks,
