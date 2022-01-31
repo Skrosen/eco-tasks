@@ -318,6 +318,36 @@ app.post("/tasks/checked-tasks", async (req, res) => {
 	}
 });
 
+// Endpoint for showing checked tasks per user
+app.get("/tasks/checked-tasks", authenticateUser);
+app.get("/tasks/checked-tasks", async (req, res) => {
+	const { userId } = req.header("userId");
+	console.log("in get checked tasks", userId);
+
+	try {
+		const user = await User.find({ _id: userId });
+		if (user) {
+			const allCheckedTasks = await CheckedTask.Find();
+
+			res.status(200).json({
+				response: allCheckedTasks,
+				success: true,
+			});
+		} else {
+			res.status(404).json({
+				message: "User not found",
+				success: false,
+			});
+		}
+	} catch (error) {
+		res.status(400).json({
+			response: error,
+			message: "Something went wrong while trying to find checked tasks...",
+			success: false,
+		});
+	}
+});
+
 // endpoint for deleting a task that has been checked as done
 app.delete("/user/checked-tasks", authenticateUser);
 app.delete("/user/checked-tasks", async (req, res) => {
