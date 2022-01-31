@@ -15,7 +15,7 @@ import Menu from "./components/Menu";
 
 import Main from "./components/Main";
 import Login from "./components/Login";
-import Tasks from "./components/Tasks";
+import UserTasks from "./components/UserTasks";
 import Leaderboard from "./components/LeaderBoard";
 import InfoPage from "./components/InfoPage";
 import UserProfile from "./components/UserProfile";
@@ -24,10 +24,14 @@ import NotFound from "./components/NotFound";
 
 import user from "./reducers/user";
 import tasks from "./reducers/tasks";
+import { ui } from "./reducers/ui";
+import checkedTasks from "./reducers/checkedTasks";
 
 const reducer = combineReducers({
 	user: user.reducer,
 	tasks: tasks.reducer,
+	ui: ui.reducer,
+	checkedTasks: checkedTasks.reducer,
 });
 
 const persistedStateJSON = localStorage.getItem("myAppReduxState");
@@ -60,7 +64,7 @@ const App = () => {
 					<Route path="/login" element={<Login />} />
 					<Route path="/eco-information" element={<InfoPage />} />
 					<Route path="/leaderboard" element={<Leaderboard />} />
-					<Route path="/tasks" element={<Tasks />} />
+					<Route path="/tasks" element={<UserTasks />} />
 					<Route path="/userprofile" element={<UserProfile />} />
 					<Route path="/user/:username" element={<UserSearch />} />
 					<Route path="/*" element={<NotFound />} />
