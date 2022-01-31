@@ -9,10 +9,10 @@ import { Button } from "./reusable-components/Buttons";
 import { API_URL } from "../utils/urls";
 
 const CheckedTasks = () => {
-	const accessToken = useSelector((store) => store.user.accessToken);
-	const userId = useSelector((store) => store.user.userId);
+	const accessToken = useSelector((store) => store?.user?.accessToken);
+	const userId = useSelector((store) => store?.user?.userId);
 	const allCheckedTasks = useSelector(
-		(store) => store.checkedTasks.checkedTasks
+		(store) => store?.checkedTasks?.checkedTasks?.response
 	);
 	const dispatch = useDispatch();
 
@@ -24,7 +24,7 @@ const CheckedTasks = () => {
 
 	useEffect(() => {
 		dispatch(fetchCheckedTasks(accessToken, userId));
-	}, []);
+	}, [dispatch, accessToken, userId]);
 
 	// const confirmDelete = () => {
 	// 	// are u sure u want to delete? Y / N
@@ -47,9 +47,9 @@ const CheckedTasks = () => {
 		<>
 			<h1>Checked Tasks</h1>
 			{allCheckedTasks?.length &&
-				allCheckedTasks.map((tasks) => (
-					<div key={allCheckedTasks._id}>
-						<p>{tasks.title}</p>
+				allCheckedTasks.map((task) => (
+					<div key={task._id}>
+						<p>{task.taskId.title}</p>
 						{/* <Button onClick={confirmDelete}>Delete</Button> */}
 					</div>
 				))}
