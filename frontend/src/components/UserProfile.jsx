@@ -1,17 +1,34 @@
 import React, { useEffect } from "react";
-import { useParams } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
+import { API_URL } from "../utils/urls";
+import user from "../reducers/user";
 
 const UserProfile = () => {
-	const user = useSelector((store) => store.user);
+  const dispatch = useDispatch();
+  const signedInUser = useSelector((store) => store.user);
 
-	return (
-		<>
-			<h1>Welcome {user.username}</h1>
-			<p>email:{user.email}</p>
-			<p>score:{user.score}</p>
-		</>
-	);
+  const options = {
+    method: "GET",
+    headers: {
+      Authorization: signedInUser.accessToken,
+    },
+  };
+
+  useEffect(async () => {
+    await fetch(API_URL(`user/${signedInUser.userId}`), options)
+      .then((res) => res.json())
+      .then((data) => {
+        dispatch(user.actions.setUserScore(data.response.score));
+      });
+  }, []);
+
+  return (
+    <>
+      <h1>Welcome {signedInUser.username}</h1>
+      <p>email:{signedInUser.email}</p>
+      <p>score:{signedInUser.score}</p>
+    </>
+  );
 };
 
 export default UserProfile;
