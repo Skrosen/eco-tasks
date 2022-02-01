@@ -46,8 +46,7 @@ const HamburgerContent = ({ open }) => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
-  const user = useSelector((store) => store.user);
-  console.log(user.username);
+  const signedInUser = useSelector((store) => store.user);
 
   const Logout = () => {
     dispatch(user.actions.setInitialState());
@@ -57,7 +56,7 @@ const HamburgerContent = ({ open }) => {
   return (
     <>
       <StyledMenu open={open}>
-        {!user.username && (
+        {!signedInUser.username && (
           <Link
             to={{
               pathname: "/login",
@@ -70,7 +69,7 @@ const HamburgerContent = ({ open }) => {
           </Link>
         )}
 
-        {user.username && (
+        {signedInUser.username && (
           <>
             <Link
               to={{
