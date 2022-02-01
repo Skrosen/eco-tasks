@@ -49,7 +49,7 @@ const Tasks = () => {
     await fetch(API_URL("tasks/checked-tasks"), options)
       .then((res) => res.json())
       .then((data) => {
-        dispatch(checkedTasks.actions.setCheckedTasks(data));
+        dispatch(checkedTasks.actions.appendCheckedTask(data));
       });
     await fetch(API_URL(`user/${userId}/score`), optionsPatch).then(
       (res) => res.json().then((data) => console.log(data))

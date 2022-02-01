@@ -5,12 +5,15 @@ import { API_URL } from "../utils/urls";
 const checkedTasks = createSlice({
   name: "checkedTasks",
   initialState: {
-    tasks: [],
+    checkedTasks: [],
     error: null,
   },
   reducers: {
     setCheckedTasks: (store, action) => {
-      store.checkedTasks = action.payload;
+      store.checkedTasks = action.payload.response;
+    },
+    appendCheckedTask: (store, action) => {
+      store.checkedTasks.push(action.payload.response);
     },
   },
 });

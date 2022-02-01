@@ -14,9 +14,9 @@ const CheckedTasks = () => {
   );
   const userId = useSelector((store) => store?.user?.userId);
   const allCheckedTasks = useSelector(
-    (store) => store?.checkedTasks?.checkedTasks?.response
+    (store) => store?.checkedTasks?.checkedTasks
   );
-  console.log(allCheckedTasks);
+
   const dispatch = useDispatch();
 
   // useEffect(() => {
