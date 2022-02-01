@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useRef } from "react";
 import thunkMiddleware from "redux-thunk";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import { Provider } from "react-redux";
@@ -9,9 +9,10 @@ import {
   applyMiddleware,
 } from "@reduxjs/toolkit";
 
+import { useOnClickOutside } from "./hooks";
 import { GlobalStyle } from "./components/reusable-components/GlobalStyles";
-
-import HamburgerMenu from "./components/HamburgerMenu";
+import Burger from "./components/Hamburger/Burger";
+import HamburgerContent from "./components/Hamburger/HamburgerContent";
 import Main from "./components/Main";
 import Login from "./components/Login";
 import UserTasks from "./components/UserTasks";
@@ -59,14 +60,16 @@ store.subscribe(() => {
 
 const App = () => {
   const [open, setOpen] = useState(false);
-
+  const node = useRef(null);
+  useOnClickOutside(node, () => setOpen(false));
   return (
     <Provider store={store}>
       <GlobalStyle />
       <BrowserRouter>
-        <HamburgerMenu open={open} setOpen={setOpen}>
-          Menu
-        </HamburgerMenu>
+        <div ref={node}>
+          <Burger open={open} setOpen={setOpen} />
+          <HamburgerContent open={open} setOpen={setOpen} />
+        </div>
         <Routes>
           <Route path="/" element={<Main />} />
           <Route path="/login" element={<Login />} />
