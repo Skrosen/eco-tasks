@@ -3,6 +3,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 
 import { fetchTasks } from "../reducers/tasks";
+import { fetchCheckedTasks } from "../reducers/checkedTasks";
 import { Button } from "./reusable-components/Buttons";
 
 import { API_URL } from "../utils/urls";
@@ -54,6 +55,7 @@ const Tasks = () => {
     await fetch(API_URL(`user/${userId}/score`), optionsPatch).then(
       (res) => res.json().then((data) => console.log(data))
     );
+    dispatch(fetchCheckedTasks(accessToken, userId));
   };
 
   return (
