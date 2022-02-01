@@ -1,5 +1,15 @@
 import styled from "styled-components";
+import { useDispatch, useSelector } from "react-redux";
+import {
+  useNavigate,
+  Link,
+  useInRouterContext,
+} from "react-router-dom";
 import { bool } from "prop-types";
+
+import { Button } from "../reusable-components/Buttons";
+
+import user from "../../reducers/user";
 
 const StyledMenu = styled.nav`
   display: flex;
@@ -33,27 +43,70 @@ const StyledMenu = styled.nav`
 `;
 
 const HamburgerContent = ({ open }) => {
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
+
+  const user = useSelector((store) => store.user);
+  console.log(user.username);
+
+  const Logout = () => {
+    dispatch(user.actions.setInitialState());
+    navigate("/login");
+  };
+
   return (
-    <StyledMenu open={open}>
-      <a href="/">
-        <span role="img" aria-label="about us">
-          &#x1f481;&#x1f3fb;&#x200d;&#x2642;&#xfe0f;
-        </span>
-        About us
-      </a>
-      <a href="/">
-        <span role="img" aria-label="price">
-          &#x1f4b8;
-        </span>
-        Pricing
-      </a>
-      <a href="/">
-        <span role="img" aria-label="contact">
-          &#x1f4e9;
-        </span>
-        Contact
-      </a>
-    </StyledMenu>
+    <>
+      <StyledMenu open={open}>
+        {!user.username && (
+          <Link
+            to={{
+              pathname: "/login",
+            }}
+          >
+            <span role="img" aria-label="about us">
+              &#x1f481;&#x1f3fb;&#x200d;&#x2642;&#xfe0f;
+            </span>
+            Login
+          </Link>
+        )}
+
+        {user.username && (
+          <>
+            <Link
+              to={{
+                pathname: `/userprofile`,
+              }}
+            >
+              <span role="img" aria-label="about us">
+                &#x1f481;&#x1f3fb;&#x200d;&#x2642;&#xfe0f;
+              </span>
+              Profile
+            </Link>
+            <Link
+              to={{
+                pathname: "/tasks",
+              }}
+            >
+              <span role="img" aria-label="about us">
+                &#x1f481;&#x1f3fb;&#x200d;&#x2642;&#xfe0f;
+              </span>
+              Tasks
+            </Link>{" "}
+            <Link
+              to={{
+                pathname: "/eco-facts",
+              }}
+            >
+              <span role="img" aria-label="about us">
+                &#x1f481;&#x1f3fb;&#x200d;&#x2642;&#xfe0f;
+              </span>
+              Ecofacts
+            </Link>
+            <Button text="Logout" onClick={Logout} />
+          </>
+        )}
+      </StyledMenu>
+    </>
   );
 };
 HamburgerContent.propTypes = {
