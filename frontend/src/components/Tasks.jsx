@@ -28,7 +28,7 @@ const Tasks = () => {
     dispatch(fetchTasks(accessToken));
   }, []);
 
-  const addTask = (taskId) => {
+  const addTask = async (taskId) => {
     const options = {
       method: "POST",
       headers: {
@@ -37,12 +37,23 @@ const Tasks = () => {
       },
       body: JSON.stringify({ userId: userId, taskId: taskId }),
     };
+    const optionsPatch = {
+      method: "PATCH",
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: accessToken,
+      },
+      body: JSON.stringify({ taskId: taskId }),
+    };
 
-    fetch(API_URL("tasks/checked-tasks"), options)
+    await fetch(API_URL("tasks/checked-tasks"), options)
       .then((res) => res.json())
       .then((data) => {
         dispatch(checkedTasks.actions.setCheckedTasks(data));
       });
+    await fetch(API_URL(`user/${userId}/score`), optionsPatch).then(
+      (res) => res.json().then((data) => console.log(data))
+    );
   };
 
   return (
