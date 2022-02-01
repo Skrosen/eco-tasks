@@ -101,6 +101,16 @@ const HamburgerContent = ({ open }) => {
               </span>
               Ecofacts
             </Link>
+            <Link
+              to={{
+                pathname: "/leaderboard",
+              }}
+            >
+              <span role="img" aria-label="about us">
+                &#x1f481;&#x1f3fb;&#x200d;&#x2642;&#xfe0f;
+              </span>
+              Leaderboard
+            </Link>
             <Button text="Logout" onClick={Logout} />
           </>
         )}

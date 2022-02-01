@@ -375,31 +375,38 @@ app.delete("/user/checked-tasks", async (req, res) => {
 });
 
 // Endpoint for showing leaderboard, only for authenticated users
-app.get("/leaderboard", authenticateUser);
+// app.get("/leaderboard", authenticateUser);
 app.get("/leaderboard", async (req, res) => {
   const { country, timeSpan } = req.query;
 
   try {
-    const topUser = await User.find().sort({ score: "desc" }).exec();
-    let filteredLeaderboard;
+    const topUsers = await CheckedTask.aggregate().group({
+      _id: {
+        userId: "$userId",
+      },
+      // totalScore: { $sum: 1 },
+      // totalScore: { $sum: "taskId.score" },
+    });
+    // .sort({ totalScore: "asc" });
+    // let filteredLeaderboard;
 
-    if (country) {
-      filteredLeaderboard = filteredLeaderboard
-        .filter((item) => item.country === topUser.country)
-        .exec();
-    }
+    // if (country) {
+    //   filteredLeaderboard = filteredLeaderboard
+    //     .filter((item) => item.country === topUser.country)
+    //     .exec();
+    // }
 
-    if (timeSpan) {
-      filteredLeaderboard = filteredLeaderboard.filter().exec();
-    }
+    // if (timeSpan) {
+    //   filteredLeaderboard = filteredLeaderboard.filter().exec();
+    // }
 
-    filteredLeaderboard = filteredLeaderboard
-      .sort({ score: "desc" })
-      .limit(20)
-      .exec();
+    // filteredLeaderboard = filteredLeaderboard
+    //   .sort({ score: "desc" })
+    //   .limit(20)
+    //   .exec();
 
     res.status(200).json({
-      response: filteredLeaderboard,
+      response: topUsers,
       success: true,
     });
   } catch (error) {
