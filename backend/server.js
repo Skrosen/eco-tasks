@@ -380,16 +380,33 @@ app.get("/leaderboard", async (req, res) => {
   const { country, timeSpan } = req.query;
 
   try {
-    const populated = await CheckedTask.find().populate("taskId");
-    console.log("pop", populated);
+    const groupedUsers = await CheckedTask.find()
+      .populate("taskId")
+      .populate("userId", {
+        password: 0,
+        accessToken: 0,
+      })
+      .aggregate([
+        {
+          $group: {
+            _id: "$userId.$.username",
+            totalScore: {
+              $sum: "taskId.$.score",
+            },
+          },
+        },
+      ]);
+    console.log("pop", groupedUsers);
 
-    const groupedUsers = await populated.aggregate().group({
-      _id: {
-        userId: "$userId",
-      },
-      // totalScore: { $sum: 1 },
-      // totalScore: { $sum: "taskId.score" },
-    });
+    // const groupedUsers = await populated;
+
+    // .group({
+    //   _id: {
+    //     userId: "$userId",
+    //   },
+    //   // totalScore: { $sum: 1 },
+    //   // totalScore: { $sum: "taskId.score" },
+    // });
 
     // .sort({ totalScore: "asc" });
     // let filteredLeaderboard;

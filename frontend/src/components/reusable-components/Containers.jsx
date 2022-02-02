@@ -1,10 +1,13 @@
 import styled from "styled-components";
 
 export const HeaderContainer = styled.div`
+  display: block;
+  /* position: fixed; */
   height: 200px;
   width: 100vw;
   align-items: center;
   background-color: green;
+  text-align: center;
   top: 0;
   left: 0;
 `;
