@@ -3,42 +3,46 @@ import { API_URL } from "../utils/urls";
 
 import { useSelector } from "react-redux";
 
+import { MainContainer } from "./reusable-components/Containers";
+
 const InfoPage = () => {
-	const [info, setInfo] = useState({});
-	const accessToken = useSelector((store) => store.user.accessToken);
+  const [info, setInfo] = useState({});
+  const accessToken = useSelector((store) => store.user.accessToken);
 
-	useEffect(() => {
-		GetEcoInfo();
-	}, []);
+  useEffect(() => {
+    GetEcoInfo();
+  }, []);
 
-	const GetEcoInfo = () => {
-		const options = {
-			headers: { Authorization: accessToken },
-		};
+  const GetEcoInfo = () => {
+    const options = {
+      headers: { Authorization: accessToken },
+    };
 
-		fetch(API_URL("information"), options)
-			.then((res) => res.json())
-			.then((data) => {
-				setInfo(data.response);
-			});
-	};
-	console.log(info);
+    fetch(API_URL("information"), options)
+      .then((res) => res.json())
+      .then((data) => {
+        setInfo(data.response);
+      });
+  };
+  console.log(info);
 
-	return (
-		<>
-			<h1>Eco information</h1>
-			{info?.length &&
-				info.map((info) => (
-					<div key={info._id}>
-						<h3>
-							{info.title} - ({info.category})
-						</h3>
-						<p>{info.description}</p>
-						<p>Source: {info.source}</p>
-					</div>
-				))}
-		</>
-	);
+  return (
+    <>
+      <h1>Eco information</h1>
+      <MainContainer>
+        {info?.length &&
+          info.map((info) => (
+            <div key={info._id}>
+              <h3>
+                {info.title} - ({info.category})
+              </h3>
+              <p>{info.description}</p>
+              <p>Source: {info.source}</p>
+            </div>
+          ))}
+      </MainContainer>
+    </>
+  );
 };
 
 export default InfoPage;

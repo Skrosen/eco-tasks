@@ -2,14 +2,19 @@ import styled from "styled-components";
 
 export const HeaderContainer = styled.div`
   display: block;
-  /* position: fixed; */
-  height: 200px;
+  position: absolute;
+  height: 15vh;
   width: 100vw;
   align-items: center;
-  background-color: green;
+  background-color: ${(props) => props.theme.darkGreen};
   text-align: center;
   top: 0;
   left: 0;
+  z-index: 1;
+`;
+
+export const MainContainer = styled.div`
+  margin-top: 200px;
 `;
 
 export const LoginContainer = styled.div`
@@ -31,3 +36,5 @@ export const Form = styled.form`
   flex-direction: column;
   gap: 10px;
 `;
+
+export const 

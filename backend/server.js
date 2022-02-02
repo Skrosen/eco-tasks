@@ -385,17 +385,17 @@ app.get("/leaderboard", async (req, res) => {
       .populate("userId", {
         password: 0,
         accessToken: 0,
-      })
-      .aggregate([
-        {
-          $group: {
-            _id: "$userId.$.username",
-            totalScore: {
-              $sum: "taskId.$.score",
-            },
-          },
-        },
-      ]);
+      });
+    // .aggregate([
+    //   {
+    //     $group: {
+    //       _id: "$userId",
+    //       // totalScore: {
+    //       //   $sum: "taskId.$.score",
+    //       // },
+    //     },
+    //   },
+    // ]);
     console.log("pop", groupedUsers);
 
     // const groupedUsers = await populated;

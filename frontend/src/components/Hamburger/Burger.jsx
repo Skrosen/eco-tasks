@@ -3,13 +3,13 @@ import { bool, func } from "prop-types";
 
 const StyledBurger = styled.button`
   position: absolute;
-  top: 5%;
-  left: 2rem;
+  top: 6vh;
+  left: 60px;
   display: flex;
   flex-direction: column;
   justify-content: space-around;
-  width: 2rem;
-  height: 2rem;
+  width: 40px;
+  height: 3vh;
   background: transparent;
   border: none;
   cursor: pointer;
@@ -21,7 +21,7 @@ const StyledBurger = styled.button`
   }
 
   div {
-    width: 2rem;
+    width: 40px;
     height: 0.25rem;
     background: ${({ open }) => (open ? "black" : "green")};
     border-radius: 10px;

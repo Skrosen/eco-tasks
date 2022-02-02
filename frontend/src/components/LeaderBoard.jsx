@@ -3,6 +3,8 @@ import { useDispatch, useSelector } from "react-redux";
 
 import { API_URL } from "../utils/urls";
 
+import { MainContainer } from "./reusable-components/Containers";
+
 const Leaderboard = () => {
   const dispatch = useDispatch();
   const signedInUser = useSelector((store) => store.user);
@@ -21,7 +23,11 @@ const Leaderboard = () => {
       });
   }, []);
 
-  return <h1>Leaderboard</h1>;
+  return (
+    <MainContainer>
+      <h1>Leaderboard</h1>
+    </MainContainer>
+  );
 };
 
 export default Leaderboard;
