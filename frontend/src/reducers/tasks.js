@@ -25,7 +25,6 @@ export const fetchTasks = (accessToken) => {
 		fetch(API_URL("tasks/all-tasks"), options)
 			.then((res) => res.json())
 			.then((json) => {
-				console.log("task json", json);
 				dispatch(tasks.actions.setTasks(json));
 				dispatch(ui.actions.setLoading(false));
 			});
