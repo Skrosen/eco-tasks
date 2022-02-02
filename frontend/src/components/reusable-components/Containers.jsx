@@ -5,6 +5,8 @@ export const HeaderContainer = styled.div`
   width: 100vw;
   align-items: center;
   background-color: green;
+  top: 0;
+  left: 0;
 `;
 
 export const LoginContainer = styled.div`
