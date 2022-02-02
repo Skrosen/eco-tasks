@@ -2,6 +2,7 @@ import React, { useState, useRef } from "react";
 import thunkMiddleware from "redux-thunk";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import { Provider } from "react-redux";
+import { ThemeProvider } from "styled-components";
 import {
   createStore,
   combineReducers,
@@ -13,6 +14,7 @@ import { useOnClickOutside } from "./hooks";
 import { GlobalStyle } from "./components/reusable-components/GlobalStyles";
 import Burger from "./components/Hamburger/Burger";
 import HamburgerContent from "./components/Hamburger/HamburgerContent";
+import Header from "./components/Header";
 import Main from "./components/Main";
 import Login from "./components/Login";
 import UserTasks from "./components/UserTasks";
@@ -21,6 +23,8 @@ import InfoPage from "./components/InfoPage";
 import UserProfile from "./components/UserProfile";
 import UserSearch from "./components/UserProfile";
 import NotFound from "./components/NotFound";
+
+import { theme } from "./components/reusable-components/GlobalStyles";
 
 import user from "./reducers/user";
 import tasks from "./reducers/tasks";
@@ -64,23 +68,26 @@ const App = () => {
   useOnClickOutside(node, () => setOpen(false));
   return (
     <Provider store={store}>
-      <GlobalStyle />
-      <BrowserRouter>
-        <div ref={node}>
-          <Burger open={open} setOpen={setOpen} />
-          <HamburgerContent open={open} setOpen={setOpen} />
-        </div>
-        <Routes>
-          <Route path="/" element={<Main />} />
-          <Route path="/login" element={<Login />} />
-          <Route path="/eco-information" element={<InfoPage />} />
-          <Route path="/leaderboard" element={<Leaderboard />} />
-          <Route path="/tasks" element={<UserTasks />} />
-          <Route path="/userprofile" element={<UserProfile />} />
-          <Route path="/user/:username" element={<UserSearch />} />
-          <Route path="/*" element={<NotFound />} />
-        </Routes>
-      </BrowserRouter>
+      <ThemeProvider theme={theme}>
+        <GlobalStyle />
+        <BrowserRouter>
+          <div ref={node}>
+            <Burger open={open} setOpen={setOpen} />
+            <HamburgerContent open={open} setOpen={setOpen} />
+          </div>
+          <Header />
+          <Routes>
+            <Route path="/" element={<Main />} />
+            <Route path="/login" element={<Login />} />
+            <Route path="/eco-information" element={<InfoPage />} />
+            <Route path="/leaderboard" element={<Leaderboard />} />
+            <Route path="/tasks" element={<UserTasks />} />
+            <Route path="/userprofile" element={<UserProfile />} />
+            <Route path="/user/:username" element={<UserSearch />} />
+            <Route path="/*" element={<NotFound />} />
+          </Routes>
+        </BrowserRouter>
+      </ThemeProvider>
     </Provider>
   );
 };

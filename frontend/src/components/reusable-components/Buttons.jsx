@@ -12,18 +12,18 @@ export const Btn = styled.button`
 	letter-spacing: 1px;
 	text-decoration: none;
 	color: rgb(3, 3, 3);
-	background: rgba(215, 255, 217, 0.3);
+	background: ${(props) => props.theme.background};
 	cursor: pointer;
 	transition: ease-out 0.5s;
 	border-radius: 30px;
 	border: 2px solid;
-	border-color: rgb(117, 164, 120);
+	border-color: ${(props) => props.theme.borderGreen};
 	border-radius: 10px;
-	box-shadow: inset 0 0 0 0 rgb(117, 164, 120);
+	box-shadow: inset 0 0 0 0 
 
 	&:hover {
-		color: rgb(255, 248, 225);
-		box-shadow: inset 0 -100px 0 0 rgb(117, 164, 120);
+		color: ${(props) => props.theme.hoverBeige};
+		box-shadow: inset 0 -100px 0 0 ${(props) => props.theme.borderGreen};
 	}
 
 	&:active {
@@ -32,5 +32,5 @@ export const Btn = styled.button`
 `;
 
 export const Button = ({ text, onClick }) => {
-	return <Btn onClick={onClick}>{text}</Btn>;
+  return <Btn onClick={onClick}>{text}</Btn>;
 };

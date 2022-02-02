@@ -15,16 +15,18 @@ const StyledMenu = styled.nav`
   display: flex;
   flex-direction: column;
   justify-content: center;
+  z-index: 1;
   background: green;
   transform: ${({ open }) =>
     open ? "translateX(0)" : "translateX(-100%)"};
-  height: 100vh;
+  /* height: 50vh; */
   text-align: left;
   padding: 2rem;
   position: absolute;
   top: 0;
   left: 0;
   transition: transform 0.3s ease-in-out;
+  border-radius: 0 0 10px 0;
 
   a {
     font-size: 2rem;
