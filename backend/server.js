@@ -382,11 +382,13 @@ app.get("/leaderboard", async (req, res) => {
         moment(task.checkedAt).isSame(currentDate, timeSpan)
       );
     }
+    console.log(populatedTasks);
 
     const summarisedUsers = _(populatedTasks)
       .groupBy("userId.username")
       .map((tasks, username) => ({
         user: username,
+        userCreatedAt: tasks[0].userId.createdAt,
         score: _.sumBy(tasks, "taskId.score"),
       }))
       .orderBy(["score"], ["desc"]);
