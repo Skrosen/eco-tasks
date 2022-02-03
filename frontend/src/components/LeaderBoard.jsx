@@ -10,6 +10,7 @@ import {
 } from "./reusable-components/Containers";
 import { Select } from "./reusable-components/Inputs";
 import { TimeSpanButton } from "./reusable-components/Buttons";
+import PopUp from "./reusable-components/PopUp";
 
 const Leaderboard = () => {
   const dispatch = useDispatch();
@@ -61,6 +62,7 @@ const Leaderboard = () => {
 
   return (
     <MainContainer>
+      <PopUp />
       <FlexRowContainer>
         <h1>Leaderboard &#127881;</h1>
         <TimeSpanButton
