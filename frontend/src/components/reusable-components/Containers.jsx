@@ -42,3 +42,8 @@ export const Form = styled.form`
   flex-direction: column;
   gap: 10px;
 `;
+
+export const FlexRowContainer = styled.div`
+  display: flex;
+  flex-direction: row;
+`;

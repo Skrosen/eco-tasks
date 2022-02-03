@@ -31,6 +31,23 @@ export const Btn = styled.button`
   }
 `;
 
+export const TimeSpanButton = styled.button`
+  all: unset;
+  padding-top: 20px;
+  margin-left: 10px;
+  color: ${(props) =>
+    props.selected ? props.theme.mediumGreen : "black"};
+
+  &:hover {
+    cursor: pointer;
+    color: ${(props) => props.theme.mediumGreen};
+  }
+
+  &:focus {
+    color: ${(props) => props.theme.mediumGreen};
+  }
+`;
+
 export const Button = ({ text, onClick }) => {
   return <Btn onClick={onClick}>{text}</Btn>;
 };

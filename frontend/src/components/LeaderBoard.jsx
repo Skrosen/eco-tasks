@@ -3,14 +3,24 @@ import { useDispatch, useSelector } from "react-redux";
 
 import { API_URL } from "../utils/urls";
 
-import { MainContainer } from "./reusable-components/Containers";
+import {
+  MainContainer,
+  FlexRowContainer,
+} from "./reusable-components/Containers";
 import { Select } from "./reusable-components/Inputs";
+import { TimeSpanButton } from "./reusable-components/Buttons";
 
 const Leaderboard = () => {
   const dispatch = useDispatch();
   const [topUsers, setTopUsers] = useState([]);
   const [country, setCountry] = useState("");
   const [timeSpan, settimeSpan] = useState("week");
+  const [chosenButton, setChosenButton] = useState({
+    week: true,
+    month: false,
+    year: false,
+    allTime: false,
+  });
   const signedInUser = useSelector((store) => store.user);
   let urlPath = `leaderboard?timeSpan=${timeSpan}`;
 
@@ -37,17 +47,50 @@ const Leaderboard = () => {
       });
   }, [country, timeSpan]);
 
+  const onButtonClick = (timeSpan) => {
+    console.log("timespan", timeSpan);
+    settimeSpan(timeSpan);
+    setChosenButton({
+      week: timeSpan === "week",
+      month: timeSpan === "month",
+      year: timeSpan === "year",
+      allTime: timeSpan === "",
+    });
+  };
+
   return (
     <MainContainer>
-      <h1>Leaderboard &#127881;</h1>
-      <div>
-        <button onClick={() => settimeSpan("week")}>This week</button>
-        <button onClick={() => settimeSpan("month")}>
+      <FlexRowContainer>
+        <h1>Leaderboard &#127881;</h1>
+        <TimeSpanButton
+          selected={chosenButton.week}
+          value="week"
+          onClick={(e) => onButtonClick(e.target.value)}
+        >
+          This week
+        </TimeSpanButton>
+        <TimeSpanButton
+          selected={chosenButton.month}
+          value="month"
+          onClick={(e) => onButtonClick(e.target.value)}
+        >
           This month
-        </button>
-        <button onClick={() => settimeSpan("year")}>This year</button>
-        <button onClick={() => settimeSpan("")}>All time high</button>
-      </div>
+        </TimeSpanButton>
+        <TimeSpanButton
+          selected={chosenButton.year}
+          value="year"
+          onClick={(e) => onButtonClick(e.target.value)}
+        >
+          This year
+        </TimeSpanButton>
+        <TimeSpanButton
+          selected={chosenButton.allTime}
+          value=""
+          onClick={(e) => onButtonClick(e.target.value)}
+        >
+          All time high
+        </TimeSpanButton>
+      </FlexRowContainer>
       <Select
         value={country}
         onChange={(e) => setCountry(e.target.value)}
