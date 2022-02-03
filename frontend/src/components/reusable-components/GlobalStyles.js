@@ -28,5 +28,6 @@ export const theme = {
   lightGreen: "rgba(215, 255, 217)",
   mediumGreen: "rgb(165, 214, 167)",
   darkGreen: "rgb(117, 164, 120)",
+  superDarkGreen: "rgb(0, 61, 0)",
   hoverBeige: "rgb(255, 248, 225)",
 };
