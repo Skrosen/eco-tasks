@@ -59,11 +59,6 @@ const Leaderboard = () => {
     });
   };
 
-  const calcTime = () => {
-    console.log(topUsers[0]);
-  };
-  calcTime();
-
   return (
     <MainContainer>
       <FlexRowContainer>
