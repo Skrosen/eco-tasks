@@ -10,7 +10,14 @@ const Leaderboard = () => {
   const dispatch = useDispatch();
   const [topUsers, setTopUsers] = useState([]);
   const [country, setCountry] = useState("");
+  const [timeSpan, settimeSpan] = useState("week");
   const signedInUser = useSelector((store) => store.user);
+  let urlPath = `leaderboard?timeSpan=${timeSpan}`;
+
+  if (country) {
+    urlPath = `leaderboard?timeSpan=${timeSpan}&country=${country}`;
+  }
+
   const options = {
     method: "GET",
     headers: {
@@ -19,25 +26,31 @@ const Leaderboard = () => {
   };
 
   useEffect(async () => {
-    await fetch(API_URL("leaderboard"), options)
+    await fetch(API_URL(urlPath), options)
       .then((res) => res.json())
       .then((data) => {
         setTopUsers(data.response);
       });
-  }, []);
+  }, [country, timeSpan]);
 
   return (
     <MainContainer>
       <h1>Leaderboard</h1>
+      <div>
+        <button onClick={() => settimeSpan("week")}>This week</button>
+        <button onClick={() => settimeSpan("month")}>
+          This month
+        </button>
+        <button onClick={() => settimeSpan("year")}>This year</button>
+        <button onClick={() => settimeSpan("")}>All time high</button>
+      </div>
       <Select
         value={country}
         onChange={(e) => setCountry(e.target.value)}
       >
-        <option value="null" disabled>
-          Select a country
-        </option>
-        <option value="sweden">Sweden</option>
-        <option value="norway">Norway</option>
+        <option value="">All countries</option>
+        <option value="Sweden">Sweden</option>
+        <option value="Norway">Norway</option>
       </Select>
       {topUsers &&
         topUsers.map((user) => (
