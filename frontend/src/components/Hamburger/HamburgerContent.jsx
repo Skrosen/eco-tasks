@@ -19,7 +19,6 @@ const StyledMenu = styled.nav`
   background: ${(props) => props.theme.superDarkGreen};
   transform: ${({ open }) =>
     open ? "translateX(0)" : "translateX(-100%)"};
-  /* height: 50vh; */
   text-align: left;
   padding: 2rem;
   position: absolute;
