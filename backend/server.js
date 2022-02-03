@@ -4,6 +4,7 @@ import mongoose from "mongoose";
 import bcrypt from "bcrypt";
 import listEndpoints from "express-list-endpoints";
 import _ from "lodash";
+import moment from "moment";
 
 import User from "./models/User.js";
 import Role from "./models/Role.js";
@@ -362,8 +363,9 @@ app.delete("/user/checked-tasks", async (req, res) => {
 // Endpoint for showing leaderboard, only for authenticated users
 // app.get("/leaderboard", authenticateUser);
 app.get("/leaderboard", async (req, res) => {
-  // const { country, timeSpan } = req.query;
-  const country = "Sweden";
+  const { country, timeSpan } = req.query;
+
+  const currentDate = moment();
 
   try {
     let populatedTasks = await CheckedTask.find()
@@ -375,8 +377,11 @@ app.get("/leaderboard", async (req, res) => {
         (task) => task.userId.country === country
       );
     }
-
-    console.log("populated tasks: ", populatedTasks);
+    if (timeSpan) {
+      populatedTasks = populatedTasks.filter((task) =>
+        moment(task.checkedAt).isSame(currentDate, timeSpan)
+      );
+    }
 
     const summarisedUsers = _(populatedTasks)
       .groupBy("userId.username")
