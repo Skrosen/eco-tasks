@@ -15,12 +15,11 @@ export const HeaderContainer = styled.div`
 
 export const MainContainer = styled.div`
   margin: 200px auto 0 auto;
-  width: 80%;
-  border-color: ${(props) => props.theme.darkGreen};
-  border-style: solid;
-  border-width: 5px;
+  width: 80%; */
   border-radius: 10px;
+  background-color: white;
   padding: 30px;
+  box-shadow: rgba(0, 0, 0, 0.1) 0px 4px 12px;
 `;
 
 export const LoginContainer = styled.div`
