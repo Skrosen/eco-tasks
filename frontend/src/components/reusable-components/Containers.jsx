@@ -15,7 +15,7 @@ export const HeaderContainer = styled.div`
 
 export const MainContainer = styled.div`
   margin: 200px auto 0 auto;
-  width: 80%; */
+  width: 80%;
   border-radius: 10px;
   background-color: white;
   padding: 30px;

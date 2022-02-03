@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
+import moment from "moment";
 
 import { API_URL } from "../utils/urls";
 
@@ -23,6 +24,7 @@ const Leaderboard = () => {
   });
   const signedInUser = useSelector((store) => store.user);
   let urlPath = `leaderboard?timeSpan=${timeSpan}`;
+  const dateToday = moment(Date.now());
 
   if (country) {
     urlPath = `leaderboard?timeSpan=${timeSpan}&country=${country}`;
@@ -48,7 +50,6 @@ const Leaderboard = () => {
   }, [country, timeSpan]);
 
   const onButtonClick = (timeSpan) => {
-    console.log("timespan", timeSpan);
     settimeSpan(timeSpan);
     setChosenButton({
       week: timeSpan === "week",
@@ -57,6 +58,11 @@ const Leaderboard = () => {
       allTime: timeSpan === "",
     });
   };
+
+  const calcTime = () => {
+    console.log(topUsers[0]);
+  };
+  calcTime();
 
   return (
     <MainContainer>
@@ -106,7 +112,12 @@ const Leaderboard = () => {
               {index + 1} {user.user}{" "}
               {index === 0 && <span>&#11088;</span>}
             </h2>
-            <p>{user.score}</p>
+            <p>Score: {user.score}</p>
+            <p>
+              Been a member for{" "}
+              {dateToday.diff(moment(user.userCreatedAt), "days")}{" "}
+              days
+            </p>
           </div>
         ))}
       {!topUsers && <p>There are no users to display here!</p>}

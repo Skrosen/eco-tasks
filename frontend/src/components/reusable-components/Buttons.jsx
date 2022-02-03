@@ -33,10 +33,11 @@ export const Btn = styled.button`
 
 export const TimeSpanButton = styled.button`
   all: unset;
-  padding-top: 20px;
   margin-left: 10px;
   color: ${(props) =>
     props.selected ? props.theme.mediumGreen : "black"};
+  text-decoration: ${(props) =>
+    props.selected ? "underline" : "none"};
 
   &:hover {
     cursor: pointer;
