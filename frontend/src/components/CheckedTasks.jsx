@@ -46,17 +46,19 @@ const CheckedTasks = () => {
   // 		});
   // };
 
+  console.log("allcheckedtasks", allCheckedTasks);
+
   return (
     <>
       <h1>Checked Tasks</h1>
-      {allCheckedTasks &&
+      {/* {allCheckedTasks &&
         Array.isArray(allCheckedTasks) &&
         allCheckedTasks.map((task) => (
           <div key={task._id}>
-            <p>{task.taskId.title}</p>
-            {/* <Button onClick={confirmDelete}>Delete</Button> */}
-          </div>
-        ))}
+            <p>{task.taskId.title}</p> */}
+      {/* <Button onClick={confirmDelete}>Delete</Button> */}
+      {/* </div>
+        ))} */}
     </>
   );
 };
