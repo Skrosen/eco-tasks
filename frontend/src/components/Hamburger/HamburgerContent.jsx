@@ -41,6 +41,10 @@ const StyledMenu = styled.nav`
     &:hover {
       color: black;
     }
+
+    &:first-child {
+      margin-top: 60px;
+    }
   }
 `;
 
@@ -56,68 +60,66 @@ const HamburgerContent = ({ open }) => {
   };
 
   return (
-    <>
-      <StyledMenu open={open}>
-        {!signedInUser.username && (
+    <StyledMenu open={open}>
+      {!signedInUser.username && (
+        <Link
+          to={{
+            pathname: "/login",
+          }}
+        >
+          <span role="img" aria-label="about us">
+            &#x1f481;&#x1f3fb;&#x200d;&#x2642;&#xfe0f;
+          </span>
+          Login
+        </Link>
+      )}
+
+      {signedInUser.username && (
+        <>
           <Link
             to={{
-              pathname: "/login",
+              pathname: `/userprofile`,
             }}
           >
             <span role="img" aria-label="about us">
               &#x1f481;&#x1f3fb;&#x200d;&#x2642;&#xfe0f;
             </span>
-            Login
+            Profile
           </Link>
-        )}
-
-        {signedInUser.username && (
-          <>
-            <Link
-              to={{
-                pathname: `/userprofile`,
-              }}
-            >
-              <span role="img" aria-label="about us">
-                &#x1f481;&#x1f3fb;&#x200d;&#x2642;&#xfe0f;
-              </span>
-              Profile
-            </Link>
-            <Link
-              to={{
-                pathname: "/tasks",
-              }}
-            >
-              <span role="img" aria-label="about us">
-                &#x1f481;&#x1f3fb;&#x200d;&#x2642;&#xfe0f;
-              </span>
-              Tasks
-            </Link>{" "}
-            <Link
-              to={{
-                pathname: "/eco-facts",
-              }}
-            >
-              <span role="img" aria-label="about us">
-                &#x1f481;&#x1f3fb;&#x200d;&#x2642;&#xfe0f;
-              </span>
-              Ecofacts
-            </Link>
-            <Link
-              to={{
-                pathname: "/leaderboard",
-              }}
-            >
-              <span role="img" aria-label="about us">
-                &#x1f481;&#x1f3fb;&#x200d;&#x2642;&#xfe0f;
-              </span>
-              Leaderboard
-            </Link>
-            <Button text="Logout" onClick={Logout} />
-          </>
-        )}
-      </StyledMenu>
-    </>
+          <Link
+            to={{
+              pathname: "/tasks",
+            }}
+          >
+            <span role="img" aria-label="about us">
+              &#x1f481;&#x1f3fb;&#x200d;&#x2642;&#xfe0f;
+            </span>
+            Tasks
+          </Link>{" "}
+          <Link
+            to={{
+              pathname: "/eco-facts",
+            }}
+          >
+            <span role="img" aria-label="about us">
+              &#x1f481;&#x1f3fb;&#x200d;&#x2642;&#xfe0f;
+            </span>
+            Ecofacts
+          </Link>
+          <Link
+            to={{
+              pathname: "/leaderboard",
+            }}
+          >
+            <span role="img" aria-label="about us">
+              &#x1f481;&#x1f3fb;&#x200d;&#x2642;&#xfe0f;
+            </span>
+            Leaderboard
+          </Link>
+          <Button text="Logout" onClick={Logout} />
+        </>
+      )}
+    </StyledMenu>
   );
 };
 HamburgerContent.propTypes = {
