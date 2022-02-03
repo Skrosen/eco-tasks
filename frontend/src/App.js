@@ -62,6 +62,10 @@ store.subscribe(() => {
   );
 });
 
+window.onload = () => {
+  window.localStorage.clear();
+};
+
 const App = () => {
   const [open, setOpen] = useState(false);
   const node = useRef(null);
