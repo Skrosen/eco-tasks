@@ -29,13 +29,17 @@ const Leaderboard = () => {
     await fetch(API_URL(urlPath), options)
       .then((res) => res.json())
       .then((data) => {
-        setTopUsers(data.response);
+        if (Array.isArray(data.response)) {
+          setTopUsers(data.response);
+        } else {
+          setTopUsers([]);
+        }
       });
   }, [country, timeSpan]);
 
   return (
     <MainContainer>
-      <h1>Leaderboard</h1>
+      <h1>Leaderboard &#127881;</h1>
       <div>
         <button onClick={() => settimeSpan("week")}>This week</button>
         <button onClick={() => settimeSpan("month")}>
@@ -53,12 +57,16 @@ const Leaderboard = () => {
         <option value="Norway">Norway</option>
       </Select>
       {topUsers &&
-        topUsers.map((user) => (
+        topUsers.map((user, index) => (
           <div key={user.user}>
-            <h2>{user.user}</h2>
+            <h2>
+              {index + 1} {user.user}{" "}
+              {index === 0 && <span>&#11088;</span>}
+            </h2>
             <p>{user.score}</p>
           </div>
         ))}
+      {!topUsers && <p>There are no users to display here!</p>}
     </MainContainer>
   );
 };
