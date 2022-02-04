@@ -1,13 +1,14 @@
 import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 
-import { fetchCheckedTasks } from "../reducers/checkedTasks";
-import checkedTasks from "../reducers/checkedTasks";
+import { fetchCheckedTasks } from "../../reducers/checkedTasks";
+import checkedTasks from "../../reducers/checkedTasks";
 
-import { Button } from "./reusable-components/Buttons";
-import PopUp from "./reusable-components/PopUp";
+import { Button } from "../reusable-components/Buttons";
+import { FlexRowContainer } from "../reusable-components/Containers";
+import PopUp from "../reusable-components/PopUp";
 
-import { API_URL } from "../utils/urls";
+import { API_URL } from "../../utils/urls";
 
 const CheckedTasks = () => {
 	const accessToken = useSelector((store) => store?.user?.accessToken);
@@ -47,10 +48,10 @@ const CheckedTasks = () => {
 			{allCheckedTasks &&
 				Array.isArray(allCheckedTasks) &&
 				allCheckedTasks.map((task) => (
-					<div key={task._id}>
+					<FlexRowContainer key={task._id}>
 						<p>{task.taskId.title}</p>
-						<Button onClick={() => deleteTask(task._id)}>Delete</Button>
-					</div>
+						<Button onClick={() => deleteTask(task._id)} text="delete" />
+					</FlexRowContainer>
 				))}
 		</>
 	);

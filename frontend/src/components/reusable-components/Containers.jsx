@@ -3,7 +3,7 @@ import styled from "styled-components";
 export const HeaderContainer = styled.div`
 	display: block;
 	position: absolute;
-	height: 130px;
+	height: 10%;
 	width: 100vw;
 	align-items: center;
 	background-color: ${(props) => props.theme.darkGreen};
@@ -11,6 +11,10 @@ export const HeaderContainer = styled.div`
 	top: 0;
 	left: 0;
 	z-index: 1;
+
+	@media (min-width: 668px) {
+		height: 130px;
+	}
 `;
 
 export const MainContainer = styled.div`
@@ -24,10 +28,15 @@ export const MainContainer = styled.div`
 
 export const LoginContainer = styled.div`
 	height: 100vh;
+	margin-top: 10%;
 	display: flex;
 	flex-direction: column;
 	align-items: center;
 	justify-content: center;
+
+	@media (min-width: 668px) {
+		margin-top: 0;
+	}
 `;
 
 export const ModeContainer = styled.form`

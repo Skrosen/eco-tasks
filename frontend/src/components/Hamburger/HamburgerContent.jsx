@@ -23,7 +23,7 @@ const StyledMenu = styled.nav`
 	border-radius: 0 0 10px 0;
 
 	a {
-		font-size: 2rem;
+		font-size: 1.2rem;
 		text-transform: uppercase;
 		padding: 2rem 0;
 		font-weight: bold;
@@ -38,6 +38,11 @@ const StyledMenu = styled.nav`
 
 		&:first-child {
 			margin-top: 60px;
+		}
+	}
+	@media (min-width: 668px) {
+		a {
+			font-size: 2rem;
 		}
 	}
 `;

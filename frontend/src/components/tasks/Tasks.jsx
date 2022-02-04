@@ -3,15 +3,15 @@ import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import _ from "lodash";
 
-import { fetchTasks } from "../reducers/tasks";
-import { fetchCheckedTasks } from "../reducers/checkedTasks";
-import { Button } from "./reusable-components/Buttons";
+import { fetchTasks } from "../../reducers/tasks";
+import { fetchCheckedTasks } from "../../reducers/checkedTasks";
+import { Button } from "../reusable-components/Buttons";
 
-import { API_URL } from "../utils/urls";
+import { API_URL } from "../../utils/urls";
 
-import checkedTasks from "../reducers/checkedTasks";
+import checkedTasks from "../../reducers/checkedTasks";
 
-import { Carousel, Slides, OuterCard, Card } from "./carousel/Carousel";
+import { Carousel, Slides, OuterCard, Card } from "./Carousel";
 
 const Tasks = () => {
 	const navigate = useNavigate();

@@ -17,7 +17,7 @@ import HamburgerContent from "./components/Hamburger/HamburgerContent";
 import Header from "./components/Header";
 import Main from "./components/Main";
 import Login from "./components/Login";
-import UserTasks from "./components/UserTasks";
+import UserTasks from "./components/tasks/UserTasks";
 import Leaderboard from "./components/LeaderBoard";
 import InfoPage from "./components/InfoPage";
 import UserProfile from "./components/UserProfile";
