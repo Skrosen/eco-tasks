@@ -10,8 +10,13 @@ import {
 	MainContainer,
 	FlexRowContainer,
 } from "./reusable-components/Containers";
-import { TimeSpanButton } from "./reusable-components/Buttons";
+import { TimeSpanButton, Button } from "./reusable-components/Buttons";
 import PopUp from "./reusable-components/PopUp";
+import {
+	GridContainer,
+	ChildSpan5Container,
+	ChildSpan1Container,
+} from "./reusable-components/GlobalStyles";
 
 const Leaderboard = () => {
 	const dispatch = useDispatch();
@@ -101,11 +106,18 @@ const Leaderboard = () => {
 				</TimeSpanButton>
 			</FlexRowContainer>
 			<label htmlFor="country"></label>
-			<Select
-				options={countryOptions}
-				value={country}
-				onChange={changeHandler}
-			/>
+			<GridContainer>
+				<ChildSpan5Container>
+					<Select
+						options={countryOptions}
+						value={country}
+						onChange={changeHandler}
+					/>
+				</ChildSpan5Container>
+				<ChildSpan1Container>
+					<Button onClick={(e) => setCountry("")} text="Clear" />
+				</ChildSpan1Container>
+			</GridContainer>
 			{topUsers &&
 				topUsers.map((user, index) => (
 					<div key={user.user}>

@@ -24,10 +24,29 @@ export const GlobalStyle = createGlobalStyle`
 
 // Define what props.theme will look like
 export const theme = {
-  backgroundTransparent: "rgba(215, 255, 217, 0.3)",
-  lightGreen: "rgba(215, 255, 217)",
-  mediumGreen: "rgb(165, 214, 167)",
-  darkGreen: "rgb(117, 164, 120)",
-  superDarkGreen: "rgb(0, 61, 0)",
-  hoverBeige: "rgb(255, 248, 225)",
+	backgroundTransparent: "rgba(215, 255, 217, 0.3)",
+	lightGreen: "rgba(215, 255, 217)",
+	mediumGreen: "rgb(165, 214, 167)",
+	darkGreen: "rgb(117, 164, 120)",
+	superDarkGreen: "rgb(0, 61, 0)",
+	hoverBeige: "rgb(255, 248, 225)",
 };
+
+export const GridContainer = styled.div`
+	display: grid;
+	align-items: center;
+	width: 100%;
+	grid-template-columns: repeat(6, 1fr);
+`;
+
+export const ChildSpan5Container = styled.div`
+	width: 100%;
+	grid-column: span 5;
+	text-align: center;
+`;
+
+export const ChildSpan1Container = styled.div`
+	width: 100%;
+	grid-column: span 1;
+	text-align: center;
+`;
