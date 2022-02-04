@@ -11,7 +11,7 @@ import { API_URL } from "../utils/urls";
 
 import checkedTasks from "../reducers/checkedTasks";
 
-import { Carousel, CarouselNav, Slides, Card, SliderNav } from "./cards/Card";
+import { Carousel, Slides, OuterCard, Card } from "./carousel/Carousel";
 
 const Tasks = () => {
 	const navigate = useNavigate();
@@ -31,7 +31,6 @@ const Tasks = () => {
 	}, []);
 
 	const addTask = async (taskId) => {
-		console.log(taskId);
 		const options = {
 			method: "POST",
 			headers: {
@@ -74,12 +73,12 @@ const Tasks = () => {
 		<>
 			<h1>All tasks</h1>
 			<Carousel>
-				<Slides>
-					{categorizedTasks &&
-						Array.isArray(categorizedTasks) &&
-						categorizedTasks?.map((task) => (
-							<div key={task._id}>
-								<h2>{task.category}</h2>
+				{categorizedTasks &&
+					Array.isArray(categorizedTasks) &&
+					categorizedTasks?.map((task) => (
+						<Slides key={task.category}>
+							<h2>{task.category}</h2>
+							<OuterCard>
 								{task.tasks.map((task) => (
 									<Card key={task._id}>
 										<h3>{task.title}</h3>
@@ -87,10 +86,9 @@ const Tasks = () => {
 										<Button onClick={() => addTask(task._id)} text="+"></Button>
 									</Card>
 								))}
-							</div>
-						))}
-				</Slides>
-				<SliderNav></SliderNav>
+							</OuterCard>
+						</Slides>
+					))}
 			</Carousel>
 		</>
 	);
