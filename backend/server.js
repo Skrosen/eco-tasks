@@ -334,8 +334,8 @@ app.get("/tasks/checked-tasks", async (req, res) => {
 });
 
 // endpoint for deleting a task that has been checked as done
-app.delete("/user/checked-tasks", authenticateUser);
-app.delete("/user/checked-tasks", async (req, res) => {
+app.delete("/tasks/checked-tasks", authenticateUser);
+app.delete("/tasks/checked-tasks", async (req, res) => {
 	const { checkedTaskId } = req.body;
 
 	try {
