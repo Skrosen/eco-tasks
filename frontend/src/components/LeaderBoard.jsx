@@ -3,6 +3,7 @@ import { useDispatch, useSelector } from "react-redux";
 import moment from "moment";
 import Select from "react-select";
 import countryList from "react-select-country-list";
+import styled from "styled-components";
 
 import { API_URL } from "../utils/urls";
 
@@ -12,11 +13,25 @@ import {
 } from "./reusable-components/Containers";
 import { TimeSpanButton, Button } from "./reusable-components/Buttons";
 import PopUp from "./reusable-components/PopUp";
-import {
-	GridContainer,
-	ChildSpan5Container,
-	ChildSpan1Container,
-} from "./reusable-components/GlobalStyles";
+
+const GridContainer = styled.div`
+	display: grid;
+	align-items: center;
+	width: 100%;
+	grid-template-columns: repeat(6, 1fr);
+`;
+
+const ChildSpan5Container = styled.div`
+	width: 100%;
+	grid-column: span 5;
+	text-align: center;
+`;
+
+const ChildSpan1Container = styled.div`
+	width: 100%;
+	grid-column: span 1;
+	text-align: center;
+`;
 
 const Leaderboard = () => {
 	const dispatch = useDispatch();
@@ -110,6 +125,7 @@ const Leaderboard = () => {
 				<ChildSpan5Container>
 					<Select
 						options={countryOptions}
+						placeholder="All countries"
 						value={country}
 						onChange={changeHandler}
 					/>
@@ -132,7 +148,12 @@ const Leaderboard = () => {
 						</p>
 					</div>
 				))}
-			{!topUsers && <p>There are no users to display here!</p>}
+			{topUsers.length < 1 && (
+				<p>
+					No users from this country has completed any tasks during chosen time
+					period.
+				</p>
+			)}
 		</MainContainer>
 	);
 };
