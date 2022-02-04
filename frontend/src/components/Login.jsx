@@ -1,7 +1,6 @@
 import React, { useState, useEffect, useMemo } from "react";
-import { useSelector, batch, useDispatch } from "react-redux";
+import { useSelector, useDispatch } from "react-redux";
 import { useNavigate } from "react-router-dom";
-import styled from "styled-components";
 import { Tab, Tabs, TabList, TabPanel } from "react-tabs";
 import "react-tabs/style/react-tabs.css";
 import Select from "react-select";
@@ -10,14 +9,8 @@ import countryList from "react-select-country-list";
 import { API_URL } from "../utils/urls";
 import user from "../reducers/user";
 
-import countrySelector from "../reducers/countrySelector";
-
 // Styling
-import {
-	LoginContainer,
-	ModeContainer,
-	Form,
-} from "./reusable-components/Containers";
+import { LoginContainer, Form } from "./reusable-components/Containers";
 import { Button } from "./reusable-components/Buttons";
 import { TextInput } from "./reusable-components/Inputs";
 
@@ -34,16 +27,11 @@ const Login = () => {
 	const [tabIndex, setTabIndex] = useState(0);
 
 	const accessToken = useSelector((store) => store.user.accessToken);
-	// const country = useSelector((store) => store?.countrySelector?.country);
 
 	const dispatch = useDispatch();
 	const navigate = useNavigate();
 
-	const options = useMemo(() => countryList().getData(), []);
-
-	const changeHandler = (country) => {
-		setCountry(country);
-	};
+	const countryOptions = useMemo(() => countryList().getData(), []);
 
 	// checks if user is authorized, otherwise sends user to login page
 	useEffect(() => {
@@ -58,6 +46,10 @@ const Login = () => {
 		} else {
 			setMode("sign-up");
 		}
+	};
+
+	const changeHandler = (country) => {
+		setCountry(country);
 	};
 
 	const onFormSubmit = (event) => {
@@ -191,17 +183,9 @@ const Login = () => {
 							value={email}
 							onChange={(e) => setEmail(e.target.value)}
 						/>
-						{/* <label htmlFor="country"></label>
-            <TextInput
-              id="country"
-              type="text"
-              placeholder="Country"
-              value={country}
-              onChange={(e) => setCountry(e.target.value)}
-            /> */}
 						<label htmlFor="country"></label>
 						<Select
-							options={options}
+							options={countryOptions}
 							value={country}
 							onChange={changeHandler}
 						/>

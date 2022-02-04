@@ -115,7 +115,13 @@ const HamburgerContent = ({ open, setOpen }) => {
 						</span>
 						Ecofacts
 					</Link>
-					<Button text="Logout" onClick={Logout} />
+					<Button
+						text="Logout"
+						onClick={() => {
+							Logout();
+							setOpen(false);
+						}}
+					/>
 				</>
 			)}
 		</StyledMenu>

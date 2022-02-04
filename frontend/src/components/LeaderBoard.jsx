@@ -1,6 +1,8 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useMemo } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import moment from "moment";
+import Select from "react-select";
+import countryList from "react-select-country-list";
 
 import { API_URL } from "../utils/urls";
 
@@ -8,7 +10,6 @@ import {
 	MainContainer,
 	FlexRowContainer,
 } from "./reusable-components/Containers";
-import { Select } from "./reusable-components/Inputs";
 import { TimeSpanButton } from "./reusable-components/Buttons";
 import PopUp from "./reusable-components/PopUp";
 
@@ -16,7 +17,7 @@ const Leaderboard = () => {
 	const dispatch = useDispatch();
 	const [topUsers, setTopUsers] = useState([]);
 	const [country, setCountry] = useState("");
-	const [timeSpan, settimeSpan] = useState("week");
+	const [timeSpan, setTimeSpan] = useState("week");
 	const [chosenButton, setChosenButton] = useState({
 		week: true,
 		month: false,
@@ -26,6 +27,8 @@ const Leaderboard = () => {
 	const signedInUser = useSelector((store) => store.user);
 	let urlPath = `leaderboard?timeSpan=${timeSpan}`;
 	const dateToday = moment(Date.now());
+
+	const countryOptions = useMemo(() => countryList().getData(), []);
 
 	if (country) {
 		urlPath = `leaderboard?timeSpan=${timeSpan}&country=${country}`;
@@ -51,7 +54,7 @@ const Leaderboard = () => {
 	}, [country, timeSpan]);
 
 	const onButtonClick = (timeSpan) => {
-		settimeSpan(timeSpan);
+		setTimeSpan(timeSpan);
 		setChosenButton({
 			week: timeSpan === "week",
 			month: timeSpan === "month",
@@ -60,9 +63,12 @@ const Leaderboard = () => {
 		});
 	};
 
+	const changeHandler = (country) => {
+		setCountry(country);
+	};
+
 	return (
 		<MainContainer>
-			<PopUp header={"a header"} text={"this is a paragrpah"} open={true} />
 			<FlexRowContainer>
 				<h1>Leaderboard &#127881;</h1>
 				<TimeSpanButton
@@ -94,16 +100,17 @@ const Leaderboard = () => {
 					All time high
 				</TimeSpanButton>
 			</FlexRowContainer>
-			<Select value={country} onChange={(e) => setCountry(e.target.value)}>
-				<option value="">All countries</option>
-				<option value="Sweden">Sweden</option>
-				<option value="Norway">Norway</option>
-			</Select>
+			<label htmlFor="country"></label>
+			<Select
+				options={countryOptions}
+				value={country}
+				onChange={changeHandler}
+			/>
 			{topUsers &&
 				topUsers.map((user, index) => (
 					<div key={user.user}>
 						<h2>
-							{index + 1} {user.user} {index === 0 && <span>&#127941;</span>}
+							{index + 1}. {user.user} {index === 0 && <span>&#127941;</span>}
 							{user.user === signedInUser.username && <span>&#11088;</span>}
 						</h2>
 						<p>Score: {user.score}</p>
