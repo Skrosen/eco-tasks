@@ -11,35 +11,34 @@ export const Slides = styled.div`
 	display: flex;
 	flex-direction: column;
 	width: 100%;
-	overflow-x: scroll;
-	scroll-snap-type: x mandatory;
-	scroll-behavior: smooth;
 `;
 
 export const OuterCard = styled.div`
 	height: fit-content;
-	display: table;
+	display: flex;
 	width: 100%;
 	align-items: flex-start;
-	justify-content: center;
 	gap: 10px;
+	overflow-x: scroll;
+	scroll-snap-type: x mandatory;
+	scroll-behavior: smooth;
+	scrollbar-width: none;
+	
+	::-webkit-scrollbar {
+		display: none;
 `;
 
 export const Card = styled.div`
 	background-color: ${(props) => props.theme.darkGreen};
-	align-items: center;
-	text-align: center;
 	border-radius: 10px;
 	display: inline-grid;
-	display: table-cell;
+	flex-direction: column;
 	flex-shrink: 0;
-	height: 100%;
-	padding: 2px;
-	max-width: 20%;
+	padding: 5px;
+	min-width: 30%;
+	max-width: 50%;
 	flex-shrink: 0;
 	flex-basis: min-content;
-	align-items: center;
-	justify-content: center;
 	position: relative;
 	transform: scale(1);
 	transform-origin: center center;
