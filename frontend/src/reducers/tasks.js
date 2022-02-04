@@ -16,7 +16,6 @@ const tasks = createSlice({
 });
 
 export const fetchTasks = (accessToken) => {
-	console.log("acessTOken", accessToken);
 	const options = {
 		headers: { Authorization: accessToken },
 	};
