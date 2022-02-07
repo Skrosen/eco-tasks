@@ -10,10 +10,7 @@ import {
 	applyMiddleware,
 } from "@reduxjs/toolkit";
 
-import { useOnClickOutside } from "./hooks";
 import { GlobalStyle } from "./components/reusable-components/GlobalStyles";
-import Burger from "./components/Hamburger/Burger";
-import HamburgerContent from "./components/Hamburger/HamburgerContent";
 import Header from "./components/Header";
 import Main from "./components/Main";
 import Login from "./components/Login";
@@ -39,7 +36,6 @@ const reducer = combineReducers({
 });
 
 let persistedState;
-console.log("utanför persisted", persistedState);
 
 const getWithExpiry = () => {
 	const persistedStateJSON = localStorage.getItem("myAppReduxState");
@@ -51,11 +47,10 @@ const getWithExpiry = () => {
 	// compare the expiry time of the item with the current time
 	if (new Date().getTime() > persistedState?.user?.expiry) {
 		// If the item is expired, delete the item from storage
-		// and return null
+		// and return empty object
 		localStorage.removeItem("myAppReduxState");
 		persistedState = {};
 	}
-	console.log("slutet persisted", persistedState);
 };
 getWithExpiry();
 
@@ -80,18 +75,11 @@ store.subscribe(() => {
 // };
 
 const App = () => {
-	const [open, setOpen] = useState(false);
-	const node = useRef(null);
-	useOnClickOutside(node, () => setOpen(false));
 	return (
 		<Provider store={store}>
 			<ThemeProvider theme={theme}>
 				<GlobalStyle />
 				<BrowserRouter>
-					<div ref={node}>
-						<Burger open={open} setOpen={setOpen} />
-						<HamburgerContent open={open} setOpen={setOpen} />
-					</div>
 					<Header />
 					<Routes>
 						<Route path="/" element={<Main />} />
