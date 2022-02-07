@@ -13,6 +13,7 @@ import user from "../reducers/user";
 import { LoginContainer, Form } from "./reusable-components/Containers";
 import { Button } from "./reusable-components/Buttons";
 import { TextInput } from "./reusable-components/Inputs";
+import PopUp from "./reusable-components/PopUp";
 
 const Login = () => {
 	const [username, setUsername] = useState("");
@@ -23,7 +24,9 @@ const Login = () => {
 	const [email, setEmail] = useState("");
 	const [country, setCountry] = useState("");
 	const [city, setCity] = useState("");
-	const [mode, setMode] = useState("sign-up");
+	const [mode, setMode] = useState("login");
+	const [showPopUp, setShowPopUp] = useState(false);
+	const [errorMessage, setErrorMessage] = useState("");
 	const [tabIndex, setTabIndex] = useState(1);
 
 	let accessToken = useSelector((store) => store.user.accessToken);
@@ -54,6 +57,7 @@ const Login = () => {
 
 	const onFormSubmit = (event) => {
 		event.preventDefault();
+		setShowPopUp(false);
 		let options = {};
 
 		if (tabIndex === 0) {
@@ -110,13 +114,15 @@ const Login = () => {
 					setCity("");
 				} else {
 					// dispatch(user.actions.setError(data.response));
-					alert(data.response); // returns error message
+					setErrorMessage(data.message);
+					setShowPopUp(true);
 				}
 			});
 	};
 
 	return (
 		<LoginContainer>
+			<PopUp header={"Whoopsie!"} text={errorMessage} open={showPopUp} />
 			<Tabs
 				selectedIndex={tabIndex}
 				onSelect={(index) => {
