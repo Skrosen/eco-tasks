@@ -164,7 +164,7 @@ app.post("/login", async (req, res) => {
 // Endpoint for showing profile page
 app.get("/user/:userId", authenticateUser);
 app.get("/user/:userId", async (req, res) => {
-	const userId = req.params.userId;
+	const { userId } = req.params;
 
 	try {
 		const user = await User.findOne({ _id: userId });
@@ -222,10 +222,49 @@ app.patch("/user/:userId/score", async (req, res) => {
 	}
 });
 
+// Endpoint to edit account
+app.patch("/user/:userId", authenticateUser);
+app.patch("/user/:userId", async (req, res) => {
+	const { userId } = req.params;
+	const { email, firstName, lastName, description, country, city } = req.body;
+
+	try {
+		const updatedUser = await User.findByIdAndUpdate(userId, {
+			firstName: firstName,
+			lastName: lastName,
+			description: description,
+			email: email,
+			country: country,
+			city: city,
+		});
+		res.status(200).json({
+			response: {
+				username: updatedUser.username,
+				firstName: updatedUser.firstName,
+				lastName: updatedUser.lastName,
+				description: updatedUser.description,
+				email: updatedUser.email,
+				country: updatedUser.country,
+				city: updatedUser.city,
+				score: updatedUser.score,
+				createdAt: updatedUser.createdAt,
+			},
+			message: "User was successfully updated",
+			success: true,
+		});
+	} catch (error) {
+		res.status(400).json({
+			response: error,
+			message: "Something went wrong...",
+			success: false,
+		});
+	}
+});
+
 // Endpoint to delete account
 app.delete("/user/:userId", authenticateUser);
 app.delete("/user/:userId", async (req, res) => {
-	const userId = req.params.userId;
+	const { userId } = req.params;
 
 	try {
 		await User.deleteOne({ _id: userId });
