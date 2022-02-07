@@ -24,9 +24,9 @@ const Login = () => {
 	const [country, setCountry] = useState("");
 	const [city, setCity] = useState("");
 	const [mode, setMode] = useState("sign-up");
-	const [tabIndex, setTabIndex] = useState(0);
+	const [tabIndex, setTabIndex] = useState(1);
 
-	const accessToken = useSelector((store) => store.user.accessToken);
+	let accessToken = useSelector((store) => store.user.accessToken);
 
 	const dispatch = useDispatch();
 	const navigate = useNavigate();
