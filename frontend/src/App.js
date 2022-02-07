@@ -38,8 +38,26 @@ const reducer = combineReducers({
 	checkedTasks: checkedTasks.reducer,
 });
 
-const persistedStateJSON = localStorage.getItem("myAppReduxState");
-const persistedState = persistedStateJSON ? JSON.parse(persistedStateJSON) : {};
+let persistedState;
+console.log("utanför persisted", persistedState);
+
+const getWithExpiry = () => {
+	const persistedStateJSON = localStorage.getItem("myAppReduxState");
+
+	if (!persistedStateJSON) {
+		return {};
+	}
+	persistedState = JSON.parse(persistedStateJSON);
+	// compare the expiry time of the item with the current time
+	if (new Date().getTime() > persistedState?.user?.expiry) {
+		// If the item is expired, delete the item from storage
+		// and return null
+		localStorage.removeItem("myAppReduxState");
+		persistedState = {};
+	}
+	console.log("slutet persisted", persistedState);
+};
+getWithExpiry();
 
 const composedEnhancers =
 	(process.env.NODE_ENV !== "production" &&
