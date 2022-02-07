@@ -3,13 +3,11 @@ import { bool, func } from "prop-types";
 
 const StyledBurger = styled.button`
 	position: absolute;
-	top: 3%;
-	left: 5%;
 	display: flex;
 	flex-direction: column;
 	justify-content: space-around;
-	width: 30px;
-	height: 30px;
+	width: fit-content;
+	height: 30%;
 	background: transparent;
 	border: none;
 	cursor: pointer;
@@ -42,9 +40,7 @@ const StyledBurger = styled.button`
 			transform: ${({ open }) => (open ? "rotate(-45deg)" : "rotate(0)")};
 		}
 	}
-	@media (min-width: 668px) {
-		top: 50px;
-		left: 50px;
+	@media (min-width: 768px) {
 	}
 `;
 

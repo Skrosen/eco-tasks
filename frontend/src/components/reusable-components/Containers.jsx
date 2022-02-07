@@ -1,20 +1,31 @@
 import styled from "styled-components";
 
-export const HeaderContainer = styled.div`
-	display: block;
+export const HeaderContainer = styled.header`
+	display: grid;
+	grid-template-columns: repeat(3, 1fr);
 	position: absolute;
 	height: 10%;
 	width: 100vw;
 	align-items: center;
 	background-color: ${(props) => props.theme.darkGreen};
 	text-align: center;
+	justify-content: center;
 	top: 0;
 	left: 0;
 	z-index: 1;
 
-	@media (min-width: 668px) {
+	@media (min-width: 768px) {
+		height: 90px;
+	}
+
+	@media (min-width: 1024px) {
 		height: 130px;
 	}
+`;
+
+export const HeaderFlexContainer = styled.div`
+	display: inline-flex;
+	grid-column: span 1;
 `;
 
 export const MainContainer = styled.div`
@@ -34,7 +45,7 @@ export const LoginContainer = styled.div`
 	align-items: center;
 	justify-content: center;
 
-	@media (min-width: 668px) {
+	@media (min-width: 768px) {
 		margin-top: 0;
 	}
 `;
