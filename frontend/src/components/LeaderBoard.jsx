@@ -12,7 +12,6 @@ import {
 	FlexRowContainer,
 } from "./reusable-components/Containers";
 import { TimeSpanButton, Button } from "./reusable-components/Buttons";
-import PopUp from "./reusable-components/PopUp";
 
 const GridContainer = styled.div`
 	display: grid;
@@ -34,7 +33,6 @@ const ChildSpan1Container = styled.div`
 `;
 
 const Leaderboard = () => {
-	const dispatch = useDispatch();
 	const [topUsers, setTopUsers] = useState([]);
 	const [country, setCountry] = useState("");
 	const [timeSpan, setTimeSpan] = useState("week");
@@ -61,8 +59,8 @@ const Leaderboard = () => {
 		},
 	};
 
-	useEffect(async () => {
-		await fetch(API_URL(urlPath), options)
+	useEffect(() => {
+		fetch(API_URL(urlPath), options)
 			.then((res) => res.json())
 			.then((data) => {
 				if (Array.isArray(data.response)) {
@@ -71,7 +69,7 @@ const Leaderboard = () => {
 					setTopUsers([]);
 				}
 			});
-	}, [country, timeSpan]);
+	}, [country, timeSpan, urlPath, options]);
 
 	const onButtonClick = (timeSpan) => {
 		setTimeSpan(timeSpan);

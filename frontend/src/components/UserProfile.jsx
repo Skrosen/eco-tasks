@@ -6,31 +6,31 @@ import user from "../reducers/user";
 import { MainContainer } from "./reusable-components/Containers";
 
 const UserProfile = () => {
-  const dispatch = useDispatch();
-  const signedInUser = useSelector((store) => store.user);
+	const dispatch = useDispatch();
+	const signedInUser = useSelector((store) => store.user);
 
-  const options = {
-    method: "GET",
-    headers: {
-      Authorization: signedInUser.accessToken,
-    },
-  };
+	const options = {
+		method: "GET",
+		headers: {
+			Authorization: signedInUser.accessToken,
+		},
+	};
 
-  useEffect(async () => {
-    await fetch(API_URL(`user/${signedInUser.userId}`), options)
-      .then((res) => res.json())
-      .then((data) => {
-        dispatch(user.actions.setUserScore(data.response.score));
-      });
-  }, []);
+	useEffect(() => {
+		fetch(API_URL(`user/${signedInUser.userId}`), options)
+			.then((res) => res.json())
+			.then((data) => {
+				dispatch(user.actions.setUserScore(data.response.score));
+			});
+	}, [dispatch, options, signedInUser.userId]);
 
-  return (
-    <MainContainer>
-      <h1>Welcome {signedInUser.username}</h1>
-      <p>email:{signedInUser.email}</p>
-      <p>score:{signedInUser.score}</p>
-    </MainContainer>
-  );
+	return (
+		<MainContainer>
+			<h1>Welcome {signedInUser.username}</h1>
+			<p>email:{signedInUser.email}</p>
+			<p>score:{signedInUser.score}</p>
+		</MainContainer>
+	);
 };
 
 export default UserProfile;

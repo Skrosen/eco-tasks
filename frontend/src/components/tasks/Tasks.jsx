@@ -24,11 +24,11 @@ const Tasks = () => {
 		if (!accessToken) {
 			navigate("/login");
 		}
-	}, []);
+	}, [accessToken, navigate]);
 
 	useEffect(() => {
 		dispatch(fetchTasks(accessToken));
-	}, []);
+	}, [dispatch, accessToken]);
 
 	const addTask = async (taskId) => {
 		const options = {

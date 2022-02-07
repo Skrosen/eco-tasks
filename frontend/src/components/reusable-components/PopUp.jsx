@@ -22,7 +22,7 @@ const PopUp = (props) => {
 
 	useEffect(() => {
 		setIsOpen(open);
-	}, []);
+	}, [open]);
 
 	const closeModal = () => {
 		setIsOpen(false);

@@ -1,6 +1,6 @@
 import styled from "styled-components";
 import { useDispatch, useSelector } from "react-redux";
-import { useNavigate, Link, useInRouterContext } from "react-router-dom";
+import { useNavigate, Link } from "react-router-dom";
 import { bool } from "prop-types";
 
 import { Button } from "../reusable-components/Buttons";

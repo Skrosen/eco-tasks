@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 
 import { fetchCheckedTasks } from "../../reducers/checkedTasks";
@@ -6,7 +6,6 @@ import checkedTasks from "../../reducers/checkedTasks";
 
 import { Button } from "../reusable-components/Buttons";
 import { FlexRowContainer } from "../reusable-components/Containers";
-import PopUp from "../reusable-components/PopUp";
 
 import { API_URL } from "../../utils/urls";
 
