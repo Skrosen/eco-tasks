@@ -1,5 +1,10 @@
 {
-  "dependencies": {
-    "group-by": "^0.0.1"
-  }
+	"name": "technigo-final-project-parent",
+	"version": "1.0.0",
+	"scripts": {
+		"postinstall": "npm install --prefix backend"
+	},
+	"dependencies": {
+		"group-by": "^0.0.1"
+	}
 }
