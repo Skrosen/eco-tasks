@@ -83,7 +83,7 @@ const Tasks = () => {
 									<Card key={task._id}>
 										<h3>{task.title}</h3>
 										<p>{task.description}</p>
-										<Button onClick={() => addTask(task._id)} text="+"></Button>
+										<Button onClick={() => addTask(task._id)} text="+" />
 									</Card>
 								))}
 							</OuterCard>

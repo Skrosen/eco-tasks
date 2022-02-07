@@ -1,6 +1,7 @@
 import React, { useEffect } from "react";
 import { useParams } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
+import { MainContainer } from "./reusable-components/Containers";
 
 import { fetchUser } from "../reducers/user";
 
@@ -16,11 +17,11 @@ const UserProfile = () => {
 	// }, []);
 	console.log(user);
 	return (
-		<>
-			<h1>Welcome {user.username}</h1>
-			<p>email:{user.email}</p>
-			<p>score:{user.score}</p>
-		</>
+		<MainContainer>
+			<h1>Welcome {signedInUser.username}</h1>
+			<p>email:{signedInUser.email}</p>
+			<p>score:{signedInUser.score}</p>
+		</MainContainer>
 	);
 };
 
