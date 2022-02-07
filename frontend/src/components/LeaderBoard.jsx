@@ -1,5 +1,5 @@
 import React, { useEffect, useState, useMemo } from "react";
-import { useDispatch, useSelector } from "react-redux";
+import { useSelector } from "react-redux";
 import moment from "moment";
 import Select from "react-select";
 import countryList from "react-select-country-list";
@@ -52,14 +52,13 @@ const Leaderboard = () => {
 		urlPath = `leaderboard?timeSpan=${timeSpan}&country=${country}`;
 	}
 
-	const options = {
-		method: "GET",
-		headers: {
-			Authorization: signedInUser.accessToken,
-		},
-	};
-
 	useEffect(() => {
+		const options = {
+			method: "GET",
+			headers: {
+				Authorization: signedInUser.accessToken,
+			},
+		};
 		fetch(API_URL(urlPath), options)
 			.then((res) => res.json())
 			.then((data) => {
@@ -69,7 +68,7 @@ const Leaderboard = () => {
 					setTopUsers([]);
 				}
 			});
-	}, [country, timeSpan, urlPath, options]);
+	}, [country, timeSpan, urlPath]);
 
 	const onButtonClick = (timeSpan) => {
 		setTimeSpan(timeSpan);

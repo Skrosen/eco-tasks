@@ -10,10 +10,6 @@ const InfoPage = () => {
 	const accessToken = useSelector((store) => store.user.accessToken);
 
 	useEffect(() => {
-		GetEcoInfo();
-	}, [GetEcoInfo]);
-
-	const GetEcoInfo = () => {
 		const options = {
 			headers: { Authorization: accessToken },
 		};
@@ -23,7 +19,7 @@ const InfoPage = () => {
 			.then((data) => {
 				setInfo(data.response);
 			});
-	};
+	}, []);
 
 	return (
 		<>
