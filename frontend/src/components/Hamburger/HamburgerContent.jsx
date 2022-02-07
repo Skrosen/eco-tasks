@@ -68,8 +68,8 @@ const HamburgerContent = ({ open, setOpen }) => {
 					onClick={() => setOpen(false)}
 				>
 					<span role="img" aria-label="about us">
-						&#x1f481;&#x1f3fb;&#x200d;&#x2642;&#xfe0f;
-					</span>
+						&#128273;
+					</span>{" "}
 					Login
 				</Link>
 			)}
@@ -84,7 +84,7 @@ const HamburgerContent = ({ open, setOpen }) => {
 					>
 						<span role="img" aria-label="about us">
 							&#127969;
-						</span>
+						</span>{" "}
 						Profile
 					</Link>
 					<Link
@@ -95,7 +95,7 @@ const HamburgerContent = ({ open, setOpen }) => {
 					>
 						<span role="img" aria-label="about us">
 							&#9989;
-						</span>
+						</span>{" "}
 						Tasks
 					</Link>{" "}
 					<Link
@@ -106,7 +106,7 @@ const HamburgerContent = ({ open, setOpen }) => {
 					>
 						<span role="img" aria-label="about us">
 							&#127882;
-						</span>
+						</span>{" "}
 						Leaderboard
 					</Link>
 					<Link
@@ -117,7 +117,7 @@ const HamburgerContent = ({ open, setOpen }) => {
 					>
 						<span role="img" aria-label="about us">
 							&#127757;
-						</span>
+						</span>{" "}
 						Ecofacts
 					</Link>
 					<Button
