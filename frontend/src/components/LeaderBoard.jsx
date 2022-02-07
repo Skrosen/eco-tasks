@@ -68,7 +68,7 @@ const Leaderboard = () => {
 					setTopUsers([]);
 				}
 			});
-	}, [country, timeSpan, urlPath]);
+	}, [country, timeSpan, urlPath, signedInUser.accessToken]);
 
 	const onButtonClick = (timeSpan) => {
 		setTimeSpan(timeSpan);

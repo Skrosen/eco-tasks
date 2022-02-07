@@ -21,7 +21,7 @@ const UserProfile = () => {
 			.then((data) => {
 				dispatch(user.actions.setUserScore(data.response.score));
 			});
-	}, [dispatch, signedInUser.userId]);
+	}, [dispatch, signedInUser.accessToken, signedInUser.userId]);
 
 	return (
 		<MainContainer>

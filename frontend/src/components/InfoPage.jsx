@@ -19,7 +19,7 @@ const InfoPage = () => {
 			.then((data) => {
 				setInfo(data.response);
 			});
-	}, []);
+	}, [accessToken]);
 
 	return (
 		<>
