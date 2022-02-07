@@ -239,6 +239,7 @@ app.patch("/user/:userId", async (req, res) => {
 		});
 		res.status(200).json({
 			response: {
+				userId: updatedUser._id,
 				username: updatedUser.username,
 				firstName: updatedUser.firstName,
 				lastName: updatedUser.lastName,
@@ -248,6 +249,7 @@ app.patch("/user/:userId", async (req, res) => {
 				city: updatedUser.city,
 				score: updatedUser.score,
 				createdAt: updatedUser.createdAt,
+				accessToken: updatedUser.accessToken,
 			},
 			message: "User was successfully updated",
 			success: true,
