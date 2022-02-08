@@ -11,17 +11,13 @@ import {
 } from "./reusable-components/Containers";
 import Burger from "./Hamburger/Burger";
 import HamburgerContent from "./Hamburger/HamburgerContent";
+import { HeaderH1 } from "./reusable-components/Text";
 
 const BurgerContainer = styled.div`
   display: flex;
   justify-self: flex-start;
   margin-left: 15%;
   align-items: center;
-`;
-
-const HeaderH1 = styled.h1`
-  display: inline-flex;
-  margin-left: 20%;
 `;
 
 const StyledLink = styled(Link)`
