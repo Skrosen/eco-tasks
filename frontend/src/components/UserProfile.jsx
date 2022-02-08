@@ -27,7 +27,7 @@ const UserProfile = () => {
 
   const countryOptions = useMemo(() => countryList().getData(), []);
 
-  const fetchScore = () => {
+  useEffect(() => {
     const options = {
       method: "GET",
       headers: {
@@ -39,11 +39,7 @@ const UserProfile = () => {
       .then((data) => {
         dispatch(user.actions.setUserScore(data.response.score));
       });
-  };
-
-  useEffect(() => {
-    fetchScore();
-  }, [fetchScore]);
+  }, [signedInUser.accessToken, signedInUser.userId, dispatch]);
 
   const editUserProfile = () => {
     setShowPopUp(true);
