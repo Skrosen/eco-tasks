@@ -12,7 +12,7 @@ export const HeaderContainer = styled.header`
   justify-content: center;
   top: 0;
   left: 0;
-  z-index: 1;
+  z-index: auto;
 
   @media (min-width: 768px) {
     height: 90px;
