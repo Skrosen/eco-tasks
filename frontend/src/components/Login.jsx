@@ -110,7 +110,6 @@ const Login = () => {
 
   const onFormSubmit = (event) => {
     event.preventDefault();
-    setShowPopUp(false);
     let options = {};
 
     if (tabIndex === 0) {
@@ -176,6 +175,7 @@ const Login = () => {
   return (
     <LoginContainer>
       <PopUp
+        setShowPopUp={setShowPopUp}
         header={"Whoopsie!"}
         text={errorMessage}
         open={showPopUp}
