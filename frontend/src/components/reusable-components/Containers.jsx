@@ -29,7 +29,7 @@ export const HeaderFlexContainer = styled.div`
 `;
 
 export const MainContainer = styled.div`
-  margin: 200px auto 0 auto;
+  margin: 130px auto 0 auto;
   width: 80%;
   border-radius: 10px;
   background-color: white;
@@ -38,7 +38,7 @@ export const MainContainer = styled.div`
 `;
 
 export const LoginContainer = styled.div`
-  margin: 100px auto 0 auto;
+  margin: 130px auto 0 auto;
   display: flex;
   flex-direction: column;
   align-items: center;

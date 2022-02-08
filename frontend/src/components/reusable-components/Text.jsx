@@ -5,7 +5,7 @@ export const HeaderH1 = styled.h1`
   margin-left: 20%;
 `;
 
-export const styledH2 = styled.h2`
-  font-size: 26px;
-  margin: 15px;
+export const StyledH2 = styled.h2`
+  font-size: 22px;
+  margin: 0px;
 `;

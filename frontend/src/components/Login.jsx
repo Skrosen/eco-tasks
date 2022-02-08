@@ -17,7 +17,7 @@ import {
 } from "./reusable-components/Containers";
 import { Button } from "./reusable-components/Buttons";
 import { TextInput } from "./reusable-components/Inputs";
-import { styledH2 } from "./reusable-components/Text";
+import { StyledH2 } from "./reusable-components/Text";
 import PopUp from "./reusable-components/PopUp";
 
 const STabList = styled(TabList)`
@@ -31,10 +31,10 @@ const STabList = styled(TabList)`
 STabList.tabsRole = "TabList";
 
 const STab = styled(Tab)`
-  list-style: none;
+  display: flex;
+  justify-content: center;
   padding: 10px;
   user-select: none;
-  font-size: 22px;
   width: 50%;
 
   cursor: arrow;
@@ -42,7 +42,7 @@ const STab = styled(Tab)`
   &.is-selected {
     color: black;
     background: white;
-    border: 1px solid grey;
+    border: 1px solid #0000002b;
     border-radius: 5px 5px 0 0;
     border-bottom: 1px solid white;
   }
@@ -56,7 +56,7 @@ STab.tabsRole = "Tab";
 
 const STabPanel = styled(TabPanel)`
   display: none;
-  border: 1px solid grey;
+  border: 1px solid #0000002b;
   border-radius: 0 0 5px 5px;
   padding-top: 4px;
   margin-top: -5px;
@@ -191,10 +191,10 @@ const Login = () => {
       >
         <STabList>
           <STab>
-            <styledH2>Sign-up</styledH2>
+            <StyledH2>Sign-up</StyledH2>
           </STab>
           <STab>
-            <styledH2>Login</styledH2>
+            <StyledH2>Login</StyledH2>
           </STab>
         </STabList>
 
