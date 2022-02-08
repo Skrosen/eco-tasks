@@ -13,16 +13,17 @@ import { Form } from "./reusable-components/Containers";
 import { TextInput } from "./reusable-components/Inputs";
 
 const UserProfile = () => {
-  const [firstName, setFirstName] = useState("");
-  const [lastName, setLastName] = useState("");
-  const [description, setDescription] = useState("");
-  const [email, setEmail] = useState("");
-  const [country, setCountry] = useState("");
-  const [city, setCity] = useState("");
+  const signedInUser = useSelector((store) => store.user);
+  const [firstName, setFirstName] = useState(signedInUser.firstName);
+  const [lastName, setLastName] = useState(signedInUser.lastName);
+  const [description, setDescription] = useState(
+    signedInUser.description
+  );
+  const [email, setEmail] = useState(signedInUser.email);
+  const [country, setCountry] = useState(signedInUser.country);
+  const [city, setCity] = useState(signedInUser.city);
   const [showPopUp, setShowPopUp] = useState(false);
   const dispatch = useDispatch();
-
-  const signedInUser = useSelector((store) => store.user);
 
   const countryOptions = useMemo(() => countryList().getData(), []);
 
@@ -46,7 +47,8 @@ const UserProfile = () => {
 
   const updateUserProfile = (event) => {
     event.preventDefault();
-    setShowPopUp(false);
+    console.log(signedInUser.userId);
+
     const options = {
       method: "PATCH",
       headers: {
@@ -65,7 +67,12 @@ const UserProfile = () => {
     fetch(API_URL(`user/${signedInUser.userId}`), options)
       .then((res) => res.json())
       .then((data) => {
-        dispatch(user.actions.setUserInfo(data.response));
+        if (data.success) {
+          console.log(data.response);
+          dispatch(user.actions.setUserInfo(data.response));
+        } else {
+          console.log(data.message);
+        }
       });
   };
 
