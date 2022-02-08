@@ -43,7 +43,7 @@ const UserProfile = () => {
 
   useEffect(() => {
     fetchScore();
-  }, []);
+  }, [fetchScore]);
 
   const editUserProfile = () => {
     setShowPopUp(true);
