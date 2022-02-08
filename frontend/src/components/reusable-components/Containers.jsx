@@ -55,6 +55,7 @@ export const Form = styled.form`
   justify-content: center;
   flex-direction: column;
   gap: 10px;
+  margin: 20px;
 `;
 
 export const FlexRowContainer = styled.div`
