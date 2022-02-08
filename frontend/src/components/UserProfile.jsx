@@ -27,7 +27,7 @@ const UserProfile = () => {
 
   const countryOptions = useMemo(() => countryList().getData(), []);
 
-  useEffect(() => {
+  const fetchScore = () => {
     const options = {
       method: "GET",
       headers: {
@@ -39,13 +39,17 @@ const UserProfile = () => {
       .then((data) => {
         dispatch(user.actions.setUserScore(data.response.score));
       });
-  }, [dispatch, signedInUser.accessToken, signedInUser.userId]);
+  };
+
+  useEffect(() => {
+    fetchScore();
+  }, []);
 
   const editUserProfile = () => {
     setShowPopUp(true);
   };
 
-  const updateUserProfile = (event) => {
+  const updateUserProfile = async (event) => {
     event.preventDefault();
     console.log(signedInUser.userId);
 
@@ -64,7 +68,7 @@ const UserProfile = () => {
         city: city,
       }),
     };
-    fetch(API_URL(`user/${signedInUser.userId}`), options)
+    await fetch(API_URL(`user/${signedInUser.userId}`), options)
       .then((res) => res.json())
       .then((data) => {
         if (data.success) {
