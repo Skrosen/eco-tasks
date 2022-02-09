@@ -214,7 +214,7 @@ app.patch("/user/:userId/score", async (req, res) => {
 			.orderBy(["score"], ["desc"]);
 
 		await User.findByIdAndUpdate(userId, {
-			score: summarisedUserScore.score,
+			score: summarisedUserScore[0].score,
 		});
 
 		res.status(200).json({
