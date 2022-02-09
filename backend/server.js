@@ -195,30 +195,33 @@ app.get("/user/:userId", async (req, res) => {
 app.patch("/user/:userId/score", authenticateUser);
 app.patch("/user/:userId/score", async (req, res) => {
 	const { userId } = req.params;
-	const { taskId } = req.body;
-
 	try {
-		const task = await Task.findById({
-			_id: taskId,
+		let populatedTasks = await CheckedTask.find()
+			.populate("taskId")
+			.populate("userId");
+
+		populatedTasks = populatedTasks.filter(
+			(task) => task.userId._id === userId
+		);
+
+		const summarisedUserScore = _(populatedTasks)
+			.groupBy("userId.username")
+			.map((tasks, username) => ({
+				user: username,
+				score: _.sumBy(tasks, "taskId.score"),
+			}))
+			.orderBy(["score"], ["desc"]);
+
+		res.status(200).json({
+			response: summarisedUserScore,
+			success: true,
 		});
-
-		const taskScore = task.score;
-
-		if (taskScore) {
-			const updatedScore = await User.findByIdAndUpdate(
-				userId,
-				{ $inc: { score: taskScore } },
-				{ new: true }
-			);
-			res.status(200).json({ response: updatedScore, success: true });
-		} else {
-			res.status(404).json({
-				message: "Task not found",
-				success: false,
-			});
-		}
 	} catch (error) {
-		res.status(400).json({ response: error, success: false });
+		res.status(400).json({
+			response: error,
+			message: "Something went wrong...",
+			success: false,
+		});
 	}
 });
 
@@ -398,7 +401,7 @@ app.delete("/tasks/checked-tasks", async (req, res) => {
 	}
 });
 
-// endpoint for deleting a task that has been checked as done
+// endpoint for deleting all tasks for a specific user
 app.delete("/tasks/:userId/checked-tasks", authenticateUser);
 app.delete("/tasks/:userId/checked-tasks", async (req, res) => {
 	const { userId } = req.params;
