@@ -43,6 +43,9 @@ const UserProfile = () => {
 			<p>Member since: {moment(signedInUser.userCreatedAt).format("LL")}</p>
 			<p>Total score: {signedInUser.score}</p>
 			<p>Email: {signedInUser.email}</p>
+			<p>
+				Location: {signedInUser.city}, {signedInUser.country}
+			</p>
 			<Button onClick={editUserProfile} text="Edit profile" />
 			<PopUp
 				setShowPopUp={setShowPopUp}
