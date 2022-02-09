@@ -195,13 +195,14 @@ app.get("/user/:userId", async (req, res) => {
 app.patch("/user/:userId/score", authenticateUser);
 app.patch("/user/:userId/score", async (req, res) => {
 	const { userId } = req.params;
+
 	try {
 		let populatedTasks = await CheckedTask.find()
 			.populate("taskId")
 			.populate("userId");
 
 		populatedTasks = populatedTasks.filter(
-			(task) => task.userId._id === userId
+			(task) => task.userId._id.toString() === userId
 		);
 
 		const summarisedUserScore = _(populatedTasks)
@@ -212,11 +213,16 @@ app.patch("/user/:userId/score", async (req, res) => {
 			}))
 			.orderBy(["score"], ["desc"]);
 
+		await User.findByIdAndUpdate(userId, {
+			score: summarisedUserScore.score,
+		});
+
 		res.status(200).json({
 			response: summarisedUserScore,
 			success: true,
 		});
 	} catch (error) {
+		console.log(error);
 		res.status(400).json({
 			response: error,
 			message: "Something went wrong...",
