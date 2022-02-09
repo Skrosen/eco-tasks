@@ -11,7 +11,15 @@ import { API_URL } from "../../utils/urls";
 
 import checkedTasks from "../../reducers/checkedTasks";
 
-import { Carousel, Slides, OuterCard, Card } from "./Carousel";
+import {
+	Carousel,
+	Slides,
+	OuterCard,
+	Card,
+	ButtonContainer,
+	Title,
+	Description,
+} from "./Carousel";
 
 const Tasks = () => {
 	const navigate = useNavigate();
@@ -45,7 +53,6 @@ const Tasks = () => {
 				"Content-Type": "application/json",
 				Authorization: accessToken,
 			},
-			body: JSON.stringify({ taskId: taskId }),
 		};
 
 		await fetch(API_URL("tasks/checked-tasks"), options)
@@ -81,9 +88,11 @@ const Tasks = () => {
 							<OuterCard>
 								{task.tasks.map((task) => (
 									<Card key={task._id}>
-										<h3>{task.title}</h3>
-										<p>{task.description}</p>
-										<Button onClick={() => addTask(task._id)} text="+" />
+										<Title>{task.title}</Title>
+										<Description>{task.description}</Description>
+										<ButtonContainer>
+											<Button onClick={() => addTask(task._id)} text="+" />
+										</ButtonContainer>
 									</Card>
 								))}
 							</OuterCard>
