@@ -211,7 +211,8 @@ app.patch("/user/:userId/score", async (req, res) => {
 				user: username,
 				score: _.sumBy(tasks, "taskId.score"),
 			}))
-			.orderBy(["score"], ["desc"]);
+			.orderBy(["score"], ["desc"])
+			.value();
 
 		await User.findByIdAndUpdate(userId, {
 			score: summarisedUserScore[0].score,
