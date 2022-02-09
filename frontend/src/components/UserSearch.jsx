@@ -1,28 +1,56 @@
 import React, { useEffect } from "react";
-import { useParams } from "react-router-dom";
-import { useDispatch, useSelector } from "react-redux";
-import { MainContainer } from "./reusable-components/Containers";
+import { useNavigate, useParams } from "react-router-dom";
+import { useSelector } from "react-redux";
 
-import { fetchUser } from "../reducers/user";
+import { API_URL } from "../../utils/urls";
+import moment from "moment";
 
-const UserProfile = () => {
-	const dispatch = useDispatch();
+import { MainContainer } from "../reusable-components/Containers";
+import { Button } from "../reusable-components/Buttons";
+
+const UserSearch = (props) => {
+	const [user, setUser] = useState({});
 	const accessToken = useSelector((store) => store.user.accessToken);
-	const { username } = useParams();
+	// const { username } = useParams();
+	const { username } = props;
+	console.log(username);
 
-	const user = useSelector((store) => store.user);
+	const navigate = useNavigate();
 
-	// useEffect(() => {
-	// 	dispatch(fetchUser(user.userId, accessToken));
-	// }, []);
-	console.log(user);
+	useEffect(
+		(username) => {
+			console.log("in useeffect", username);
+			const options = {
+				headers: { Authorization: accessToken },
+			};
+			return () => {
+				fetch(API_URL(`user/${username}`), options)
+					.then((res) => res.json())
+					.then((data) => {
+						console.log(data);
+						setUser("data", data);
+					});
+			};
+		},
+		[accessToken, username]
+	);
+
+	console.log("user", user);
+
 	return (
 		<MainContainer>
-			<h1>Welcome {signedInUser.username}</h1>
-			<p>email:{signedInUser.email}</p>
-			<p>score:{signedInUser.score}</p>
+			<h1>
+				{user.firstName} {user.lastName}
+			</h1>
+			<p>Aka. {user.username}</p>
+			<p>Member since: {moment(signedInUser.userCreatedAt).format("LL")}</p>
+			<p>Total score: {signedInUser.score}</p>
+			<p>
+				Location: {signedInUser.city}, {signedInUser.country}
+			</p>
+			<Button onClick={navigate("/leaderboard")} text="Back to leaderboard" />
 		</MainContainer>
 	);
 };
 
-export default UserProfile;
+export default UserSearch;
