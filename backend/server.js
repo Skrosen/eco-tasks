@@ -161,6 +161,36 @@ app.post("/login", async (req, res) => {
 	}
 });
 
+// Endpoint for showing someone elses profile page by username
+app.get("/user/:username", authenticateUser);
+app.get("/user/:username", async (req, res) => {
+	const { username } = req.params;
+
+	try {
+		const user = await User.findOne({ username: username });
+		res.status(200).json({
+			response: {
+				username: user.username,
+				firstName: user.firstName,
+				lastName: user.lastName,
+				description: user.description,
+				email: user.email,
+				country: user.country,
+				city: user.city,
+				score: user.score,
+				createdAt: user.createdAt,
+			},
+			success: true,
+		});
+	} catch (error) {
+		res.status(400).json({
+			response: error,
+			message: "Something went wrong...",
+			success: false,
+		});
+	}
+});
+
 // Endpoint for showing profile page
 app.get("/user/:userId", authenticateUser);
 app.get("/user/:userId", async (req, res) => {
