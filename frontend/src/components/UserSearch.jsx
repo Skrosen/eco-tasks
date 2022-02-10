@@ -21,7 +21,6 @@ const UserSearch = () => {
     fetch(API_URL(`user/${username}`), options)
       .then((res) => res.json())
       .then((data) => {
-        console.log(data.response);
         setUser(data.response);
       });
   }, [accessToken, username]);

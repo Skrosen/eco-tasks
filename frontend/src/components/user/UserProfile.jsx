@@ -7,6 +7,7 @@ import PopUp from "../reusable-components/PopUp";
 import { Button } from "../reusable-components/Buttons";
 import EditProfileForm from "../user/EditProfileForm";
 import DeleteUser from "./DeleteUser";
+import { InlineH1, InlineP } from "../reusable-components/Text";
 
 const UserProfile = () => {
   const signedInUser = useSelector((store) => store.user);
@@ -19,10 +20,11 @@ const UserProfile = () => {
 
   return (
     <MainContainer>
-      <h1>
+      <InlineH1>
         {signedInUser.firstName} {signedInUser.lastName}
-      </h1>
-      <p>Aka. {signedInUser.username}</p>
+      </InlineH1>
+      <InlineP>Aka. {signedInUser.username}</InlineP>
+      <p>Description: {signedInUser.description}</p>
       <p>
         Member since:{" "}
         {moment(signedInUser.userCreatedAt).format("LL")}
