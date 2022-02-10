@@ -28,6 +28,10 @@ Show profile information for logged in user get /user/:userId
 
 Update user-score patch /user/:userId/score
 
+### Edit user account
+
+Update user account patch /user/:userId
+
 ### Delete user account
 
 Delete user account delete /user/:userId
@@ -44,9 +48,18 @@ Show all tasks get /tasks/all-tasks
 
 Mark a task as done post /task/checked-tasks
 
+### Show checked tasks
+
+Show all checked task per user get /task/checked-tasks
+
 ### Delete task
 
 Delete a task that a user has checked as done delete /task/checked-tasks
+
+### Delete checked task connected to user
+
+Delete all task that a user has checked as done delete
+/task/:userId/checked-tasks
 
 ### Leaderboard
 
