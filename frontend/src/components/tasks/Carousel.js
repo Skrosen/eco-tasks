@@ -80,6 +80,7 @@ export const Card = styled.div`
 
 export const Pdiv = styled.div`
 	display: flex;
+	flex-wrap: wrap;
 	justify-content: center;
 	margin-top: auto;
 	height: 100%;
