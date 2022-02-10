@@ -1,11 +1,12 @@
 import React, { useEffect, useState, useMemo } from "react";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import moment from "moment";
 import Select from "react-select";
 import countryList from "react-select-country-list";
 import styled from "styled-components";
 
 import { API_URL } from "../utils/urls";
+import { ui } from "../reducers/ui";
 
 import {
   MainContainer,
@@ -55,6 +56,7 @@ const Leaderboard = () => {
   const signedInUser = useSelector((store) => store.user);
   let urlPath = `leaderboard?timeSpan=${timeSpan}`;
   const dateToday = moment(Date.now());
+  const dispatch = useDispatch();
 
   const countryOptions = useMemo(() => countryList().getData(), []);
 
@@ -63,6 +65,7 @@ const Leaderboard = () => {
   }
 
   useEffect(() => {
+    dispatch(ui.actions.setLoading(true));
     const options = {
       method: "GET",
       headers: {
@@ -77,6 +80,7 @@ const Leaderboard = () => {
         } else {
           setTopUsers([]);
         }
+        dispatch(ui.actions.setLoading(false));
       });
   }, [country, timeSpan, urlPath, signedInUser.accessToken]);
 

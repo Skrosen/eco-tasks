@@ -1,8 +1,10 @@
 import React, { useState, useEffect } from "react";
+import { useDispatch } from "react-redux";
 import { API_URL } from "../utils/urls";
 import _ from "lodash";
 
 import { useSelector } from "react-redux";
+import { ui } from "../reducers/ui";
 
 import {
   MainContainer,
@@ -14,10 +16,12 @@ import {
 import { StyledA } from "./reusable-components/Text";
 
 const InfoPage = () => {
+  const dispatch = useDispatch();
   const [info, setInfo] = useState({});
   const accessToken = useSelector((store) => store.user.accessToken);
 
   useEffect(() => {
+    dispatch(ui.actions.setLoading(true));
     const options = {
       headers: { Authorization: accessToken },
     };
@@ -26,6 +30,7 @@ const InfoPage = () => {
       .then((res) => res.json())
       .then((data) => {
         setInfo(data.response);
+        dispatch(ui.actions.setLoading(false));
       });
   }, [accessToken]);
 

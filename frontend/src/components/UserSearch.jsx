@@ -1,9 +1,11 @@
 import React, { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
-import { useSelector } from "react-redux";
+import { useSelector, useDispatch } from "react-redux";
+import moment from "moment";
+
+import { ui } from "../reducers/ui";
 
 import { API_URL } from "../utils/urls";
-import moment from "moment";
 
 import { MainContainer } from "./reusable-components/Containers";
 import { LinkButton } from "./reusable-components/Buttons";
@@ -14,7 +16,10 @@ const UserSearch = () => {
   const [user, setUser] = useState({});
   const accessToken = useSelector((store) => store.user.accessToken);
 
+  const dispatch = useDispatch();
+
   useEffect(() => {
+    dispatch(ui.actions.setLoading(true));
     const options = {
       headers: { Authorization: accessToken },
     };
@@ -22,6 +27,7 @@ const UserSearch = () => {
       .then((res) => res.json())
       .then((data) => {
         setUser(data.response);
+        dispatch(ui.actions.setLoading(false));
       });
   }, [accessToken, username]);
 

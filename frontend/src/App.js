@@ -11,15 +11,6 @@ import {
 } from "@reduxjs/toolkit";
 
 import { GlobalStyle } from "./components/reusable-components/GlobalStyles";
-import Header from "./components/Header";
-import Main from "./components/Main";
-import Login from "./components/Login";
-import UserTasks from "./components/tasks/UserTasks";
-import Leaderboard from "./components/LeaderBoard";
-import InfoPage from "./components/InfoPage";
-import UserProfile from "./components/user/UserProfile";
-import UserSearch from "./components/UserSearch";
-import NotFound from "./components/NotFound";
 
 import { theme } from "./components/reusable-components/GlobalStyles";
 
@@ -27,6 +18,7 @@ import user from "./reducers/user";
 import tasks from "./reducers/tasks";
 import { ui } from "./reducers/ui";
 import checkedTasks from "./reducers/checkedTasks";
+import Container from "./components/Container";
 
 const reducer = combineReducers({
   user: user.reducer,
@@ -73,28 +65,12 @@ store.subscribe(() => {
   );
 });
 
-// window.onload = () => {
-//   window.localStorage.clear();
-// };
-
 const App = () => {
   return (
     <Provider store={store}>
       <ThemeProvider theme={theme}>
         <GlobalStyle />
-        <BrowserRouter>
-          <Header />
-          <Routes>
-            <Route path="/" element={<Main />} />
-            <Route path="/login" element={<Login />} />
-            <Route path="/eco-facts" element={<InfoPage />} />
-            <Route path="/leaderboard" element={<Leaderboard />} />
-            <Route path="/tasks" element={<UserTasks />} />
-            <Route path="/user/:username" element={<UserSearch />} />
-            <Route path="/userprofile" element={<UserProfile />} />
-            <Route path="/*" element={<NotFound />} />
-          </Routes>
-        </BrowserRouter>
+        <Container />
       </ThemeProvider>
     </Provider>
   );

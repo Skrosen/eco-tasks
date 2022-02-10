@@ -9,6 +9,7 @@ import styled from "styled-components";
 
 import { API_URL } from "../utils/urls";
 import user from "../reducers/user";
+import { ui } from "../reducers/ui";
 
 // Styling
 import {
@@ -111,6 +112,7 @@ const Login = () => {
 
   const onFormSubmit = (event) => {
     event.preventDefault();
+    dispatch(ui.actions.setLoading(true));
     let options = {};
 
     if (tabIndex === 0) {
@@ -172,6 +174,7 @@ const Login = () => {
           setHeader("Whoopsie");
           setShowPopUp(true);
         }
+        dispatch(ui.actions.setLoading(false));
       });
   };
 
