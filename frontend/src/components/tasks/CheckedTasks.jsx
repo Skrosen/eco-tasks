@@ -1,11 +1,12 @@
 import React, { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
+import moment from "moment";
 
 import { fetchCheckedTasks } from "../../reducers/checkedTasks";
 import checkedTasks from "../../reducers/checkedTasks";
 
+import { InlineP2, SmallP } from "../reusable-components/Text";
 import { Button } from "../reusable-components/Buttons";
-import { FlexRowContainer } from "../reusable-components/Containers";
 
 import { API_URL } from "../../utils/urls";
 
@@ -48,13 +49,16 @@ const CheckedTasks = () => {
       {allCheckedTasks &&
         Array.isArray(allCheckedTasks) &&
         allCheckedTasks.map((task) => (
-          <FlexRowContainer key={task._id}>
-            <p>{task.taskId.title}</p>
+          <div key={task._id}>
+            <InlineP2>{task.taskId.title}</InlineP2>
             <Button
               onClick={() => deleteTask(task._id)}
-              text="delete"
+              text="&#128465;"
             />
-          </FlexRowContainer>
+            <SmallP>
+              Checked at: {moment(task.checkedAt).format("LL")}
+            </SmallP>
+          </div>
         ))}
     </>
   );

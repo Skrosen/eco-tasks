@@ -54,3 +54,13 @@ export const InlineP = styled.p`
   font-size: 20px;
   margin-left: 15px;
 `;
+
+export const InlineP2 = styled.p`
+  display: inline;
+`;
+
+export const SmallP = styled.p`
+  font-size: 12px;
+  margin-bottom: 15px;
+  margin-top: 0;
+`;
