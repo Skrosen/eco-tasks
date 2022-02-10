@@ -63,6 +63,7 @@ export const Card = styled.div`
 	flex-shrink: 0;
 	padding: 5px;
 	min-width: 50%;
+	max-width: 60%;
 	height: 250px;
 	flex-shrink: 0;
 	flex-basis: min-content;
