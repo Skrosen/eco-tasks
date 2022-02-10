@@ -29,8 +29,6 @@ const DeleteUser = (props) => {
       .then((data) => {
         if (data.success) {
           deletedTasks = true;
-        } else {
-          console.log(data.message);
         }
         dispatch(ui.actions.setLoading(false));
       });
@@ -42,8 +40,6 @@ const DeleteUser = (props) => {
           if (data.success) {
             dispatch(user.actions.setInitialState());
             navigate("/login");
-          } else {
-            console.log(data.message);
           }
         });
     }

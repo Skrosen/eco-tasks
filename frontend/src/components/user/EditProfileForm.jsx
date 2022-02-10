@@ -30,7 +30,6 @@ const EditProfileForm = (props) => {
   const updateUserProfile = async (event) => {
     dispatch(ui.actions.setLoading(true));
     event.preventDefault();
-    console.log(signedInUser.userId);
 
     const options = {
       method: "PATCH",
@@ -52,9 +51,6 @@ const EditProfileForm = (props) => {
       .then((data) => {
         if (data.success) {
           dispatch(user.actions.setUserInfo(data.response));
-          // setShowPopUp(false);
-        } else {
-          console.log(data.message);
         }
         dispatch(ui.actions.setLoading(false));
       });
