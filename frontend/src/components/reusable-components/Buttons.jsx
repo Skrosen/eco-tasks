@@ -19,7 +19,7 @@ export const Btn = styled.button`
 
   &:hover {
     color: ${(props) => props.theme.hoverBeige};
-    box-shadow: inset 0 -100px 0 0 ${(props) => props.theme.darkGreen};
+    box-shadow: inset 0 -100px 0 0 ${(props) => props.theme.superDarkGreen};
   }
 
   &:active {
