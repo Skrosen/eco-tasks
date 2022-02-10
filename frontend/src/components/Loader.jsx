@@ -2,8 +2,15 @@ import React from "react";
 import styled, { keyframes } from "styled-components";
 
 const LoaderContainer = styled.div`
-  position: absolute;
-  z-index: 1;
+  position: fixed;
+  padding: 0;
+  margin: 0;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 3;
+  background: rgba(255, 255, 255, 0.8);
 `;
 
 const spin = keyframes`
@@ -15,6 +22,7 @@ const LoadingSpinner = styled.div`
   display: flex;
   justify-content: center;
   align-items: center;
+  margin: 45% auto;
   width: 100px;
   height: 100px;
   animation: ${spin} 1.2s linear infinite;
@@ -24,7 +32,7 @@ const LoadingSpinner = styled.div`
     display: block;
     width: 80px;
     height: 80px;
-    margin: 8px;
+
     border-radius: 50%;
     border: 6px solid ${(props) => props.theme.darkGreen};
     border-color: ${(props) => props.theme.darkGreen} transparent
