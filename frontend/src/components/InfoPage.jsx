@@ -32,7 +32,7 @@ const InfoPage = () => {
         setInfo(data.response);
         dispatch(ui.actions.setLoading(false));
       });
-  }, [accessToken]);
+  }, [accessToken, dispatch]);
 
   const categorizedInfo = _(info)
     .groupBy("category")

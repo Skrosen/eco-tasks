@@ -29,7 +29,7 @@ const UserSearch = () => {
         setUser(data.response);
         dispatch(ui.actions.setLoading(false));
       });
-  }, [accessToken, username]);
+  }, [accessToken, username, dispatch]);
 
   return (
     <MainContainer>

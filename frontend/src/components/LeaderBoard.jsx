@@ -82,7 +82,13 @@ const Leaderboard = () => {
         }
         dispatch(ui.actions.setLoading(false));
       });
-  }, [country, timeSpan, urlPath, signedInUser.accessToken]);
+  }, [
+    country,
+    timeSpan,
+    urlPath,
+    signedInUser.accessToken,
+    dispatch,
+  ]);
 
   const onButtonClick = (timeSpan) => {
     setTimeSpan(timeSpan);

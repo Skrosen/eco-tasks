@@ -1,6 +1,5 @@
 import React from "react";
 import thunkMiddleware from "redux-thunk";
-import { BrowserRouter, Routes, Route } from "react-router-dom";
 import { Provider } from "react-redux";
 import { ThemeProvider } from "styled-components";
 import {
