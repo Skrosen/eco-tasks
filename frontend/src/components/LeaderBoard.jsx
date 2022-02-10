@@ -17,7 +17,6 @@ import {
 } from "./reusable-components/Buttons";
 import {
   StyledH2Green,
-  StyledA,
   StyledP,
   StyledLink,
 } from "./reusable-components/Text";
