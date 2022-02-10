@@ -58,11 +58,11 @@ export const OuterCard = styled.div`
 export const Card = styled.div`
 	background-color: ${(props) => props.theme.darkGreen};
 	border-radius: 10px;
-	display: grid;
+	display: flex;
 	flex-direction: column;
 	flex-shrink: 0;
 	padding: 5px;
-	min-width: 60%;
+	min-width: 50%;
 	height: 250px;
 	flex-shrink: 0;
 	flex-basis: min-content;
