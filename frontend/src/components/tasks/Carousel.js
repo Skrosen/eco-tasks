@@ -78,6 +78,14 @@ export const Card = styled.div`
 	}
 `;
 
+export const Pdiv = styled.div`
+	display: flex;
+	justify-content: center;
+	margin-top: auto;
+	height: 100%;
+	overflow: scroll;
+`;
+
 export const ButtonContainer = styled.div`
 	display: flex;
 	justify-content: center;
@@ -92,7 +100,4 @@ export const Title = styled.h3`
 
 export const Description = styled.p`
 	display: flex;
-	margin-top: auto;
-	height: 100%;
-	overflow: scroll;
 `;
