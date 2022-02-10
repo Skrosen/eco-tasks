@@ -83,6 +83,10 @@ export const FlexRowContainer = styled.div`
   display: flex;
   flex-direction: row;
   align-items: baseline;
+
+  @media (max-width: 768px) {
+    flex-direction: column;
+  }
 `;
 
 export const MainFlexContainer = styled.div`

@@ -79,7 +79,8 @@ const Login = () => {
   const [city, setCity] = useState("");
   const [mode, setMode] = useState("login");
   const [showPopUp, setShowPopUp] = useState(false);
-  const [errorMessage, setErrorMessage] = useState("");
+  const [header, setHeader] = useState("Alert");
+  const [message, setMessage] = useState("");
   const [tabIndex, setTabIndex] = useState(1);
 
   let accessToken = useSelector((store) => store.user.accessToken);
@@ -143,9 +144,10 @@ const Login = () => {
       .then((res) => res.json())
       .then((data) => {
         if (data.success && tabIndex === 0) {
-          alert(
+          setMessage(
             `Welcome ${data.response.username}, your account has been created!`
-          ); // welcomes new users who just signed up
+          );
+          setHeader("Yay!");
           setUsername("");
           setPassword("");
           setFirstName("");
@@ -154,6 +156,7 @@ const Login = () => {
           setEmail("");
           setCountry();
           setCity("");
+          setShowPopUp(true);
         } else if (data.success && tabIndex === 1) {
           dispatch(user.actions.setUserInfo(data.response));
           setUsername("");
@@ -165,8 +168,8 @@ const Login = () => {
           setCountry();
           setCity("");
         } else {
-          // dispatch(user.actions.setError(data.response));
-          setErrorMessage(data.message);
+          setMessage(data.message);
+          setHeader("Whoopsie");
           setShowPopUp(true);
         }
       });
@@ -176,8 +179,8 @@ const Login = () => {
     <LoginContainer>
       <PopUp
         setShowPopUp={setShowPopUp}
-        header={"Whoopsie!"}
-        text={errorMessage}
+        header={header}
+        text={message}
         open={showPopUp}
       />
       <Tabs
