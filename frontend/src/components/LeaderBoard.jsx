@@ -19,6 +19,7 @@ import {
   StyledH2Green,
   StyledA,
   StyledP,
+  StyledLink,
 } from "./reusable-components/Text";
 
 const GridContainer = styled.div`
@@ -149,12 +150,12 @@ const Leaderboard = () => {
             <FlexRowContainer>
               <StyledH2Green>
                 {index + 1}.
-                <StyledA href={`/user/${user.user}`}>
+                <StyledLink to={`/user/${user.user}`}>
                   {user.user} {index === 0 && <span>&#127941;</span>}
                   {user.user === signedInUser.username && (
                     <span>&#11088;</span>
                   )}
-                </StyledA>
+                </StyledLink>
               </StyledH2Green>
             </FlexRowContainer>
             <StyledP>Score: {user.score}</StyledP>
