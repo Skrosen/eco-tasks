@@ -39,6 +39,7 @@ export const HeaderFlexContainer = styled.div`
 export const MainContainer = styled.div`
   margin: 120px auto 0 auto;
   width: 80%;
+  max-width: 1000px;
   border-radius: 10px;
   background-color: white;
   padding: 30px;
