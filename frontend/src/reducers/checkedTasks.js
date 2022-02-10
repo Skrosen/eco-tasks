@@ -1,6 +1,7 @@
 import { createSlice } from "@reduxjs/toolkit";
 import { ui } from "./ui";
 import { API_URL } from "../utils/urls";
+import moment from "moment";
 
 const checkedTasks = createSlice({
   name: "checkedTasks",
@@ -10,7 +11,7 @@ const checkedTasks = createSlice({
   },
   reducers: {
     setCheckedTasks: (store, action) => {
-      store.checkedTasks = action.payload.response;
+      store.checkedTasks = action.payload;
     },
     appendCheckedTask: (store, action) => {
       store.checkedTasks.push(action.payload.response);
@@ -27,7 +28,12 @@ export const fetchCheckedTasks = (accessToken, userId) => {
     fetch(API_URL("tasks/checked-tasks"), options)
       .then((res) => res.json())
       .then((json) => {
-        dispatch(checkedTasks.actions.setCheckedTasks(json));
+        const sortedList = json.response.sort(
+          (a, b) =>
+            moment(b.checkedAt).format("YYYYMMDD") -
+            moment(a.checkedAt).format("YYYYMMDD")
+        );
+        dispatch(checkedTasks.actions.setCheckedTasks(sortedList));
         dispatch(ui.actions.setLoading(false));
       });
   };
