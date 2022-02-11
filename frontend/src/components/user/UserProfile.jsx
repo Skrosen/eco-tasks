@@ -26,8 +26,7 @@ const UserProfile = () => {
       <InlineP>Aka. {signedInUser.username}</InlineP>
       <p>Description: {signedInUser.description}</p>
       <p>
-        Member since:{" "}
-        {moment(signedInUser.userCreatedAt).format("LL")}
+        Member since: {moment(signedInUser.createdAt).format("LL")}
       </p>
       <p>Total score: {signedInUser.score}</p>
       <p>Email: {signedInUser.email}</p>

@@ -38,7 +38,7 @@ const UserSearch = () => {
       </InlineH1>
       <InlineP>Aka. {user.username}</InlineP>
       <p>Description: {user.description}</p>
-      <p>Member since: {moment(user.userCreatedAt).format("LL")}</p>
+      <p>Member since: {moment(user.createdAt).format("LL")}</p>
       <p>Total score: {user.score}</p>
       <p>
         Location: {user.city}, {user.country}
