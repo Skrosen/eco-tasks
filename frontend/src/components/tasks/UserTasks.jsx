@@ -7,8 +7,8 @@ import { MainContainer } from "../reusable-components/Containers";
 const UserTasks = () => {
 	return (
 		<MainContainer>
-			<CheckedTasks />
 			<Tasks />
+			<CheckedTasks />
 		</MainContainer>
 	);
 };
