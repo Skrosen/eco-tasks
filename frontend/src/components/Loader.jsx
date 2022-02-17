@@ -2,15 +2,20 @@ import React from "react";
 import styled, { keyframes } from "styled-components";
 
 const LoaderContainer = styled.div`
-  position: fixed;
-  padding: 0;
-  margin: 0;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  z-index: 3;
-  background: rgba(255, 255, 255, 0.8);
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	position: fixed;
+	padding: 0;
+	margin: 0;
+
+	top: 0;
+	left: 0;
+
+	width: 100%;
+	height: 100%;
+	z-index: 4;
+	background: rgba(255, 255, 255, 0.8);
 `;
 
 const spin = keyframes`
@@ -19,33 +24,29 @@ const spin = keyframes`
 `;
 
 const LoadingSpinner = styled.div`
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  margin: 45% auto;
-  width: 100px;
-  height: 100px;
-  animation: ${spin} 1.2s linear infinite;
+	width: 100px;
+	height: 100px;
+	animation: ${spin} 1.2s linear infinite;
 
-  &:after {
-    content: " ";
-    display: block;
-    width: 80px;
-    height: 80px;
+	&:after {
+		content: " ";
+		display: block;
+		width: 80px;
+		height: 80px;
 
-    border-radius: 50%;
-    border: 6px solid ${(props) => props.theme.darkGreen};
-    border-color: ${(props) => props.theme.darkGreen} transparent
-      ${(props) => props.theme.darkGreen} transparent;
-  }
+		border-radius: 50%;
+		border: 6px solid ${(props) => props.theme.darkGreen};
+		border-color: ${(props) => props.theme.darkGreen} transparent
+			${(props) => props.theme.darkGreen} transparent;
+	}
 `;
 
 const Loader = () => {
-  return (
-    <LoaderContainer>
-      <LoadingSpinner />
-    </LoaderContainer>
-  );
+	return (
+		<LoaderContainer>
+			<LoadingSpinner />
+		</LoaderContainer>
+	);
 };
 
 export default Loader;
