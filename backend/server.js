@@ -482,14 +482,19 @@ app.get("/leaderboard", async (req, res) => {
 			);
 		}
 
-		const summarisedUsers = _(populatedTasks)
+		let summarisedUsers = _(populatedTasks)
 			.groupBy("userId.username")
 			.map((tasks, username) => ({
 				user: username,
 				userCreatedAt: tasks[0].userId.createdAt,
 				score: _.sumBy(tasks, "taskId.score"),
 			}))
-			.orderBy(["score"], ["desc"]);
+			.orderBy(["score"], ["desc"])
+			.value();
+
+		if (summarisedUsers.length > 10) {
+			summarisedUsers = _.take(summarisedUsers, 10);
+		}
 
 		res.status(200).json({
 			response: summarisedUsers,
