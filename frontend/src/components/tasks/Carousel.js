@@ -86,6 +86,17 @@ export const Pdiv = styled.div`
 	margin-top: auto;
 	height: 100%;
 	overflow: scroll;
+
+	/* Hide scrollbar for Chrome, Safari and Opera */
+	::-webkit-scrollbar {
+		display: none;
+	}
+
+	/* Hide scrollbar for IE, Edge and Firefox */
+	::-webkit-scrollbar {
+		-ms-overflow-style: none; /* IE and Edge */
+		scrollbar-width: none; /* Firefox */
+	}
 `;
 
 export const ButtonContainer = styled.div`
