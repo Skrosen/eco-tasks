@@ -12,7 +12,7 @@ const StyledBurger = styled.button`
 	border: none;
 	cursor: pointer;
 	padding: 0;
-	z-index: 2;
+	z-index: 3;
 
 	&:focus {
 		outline: none;
@@ -24,7 +24,6 @@ const StyledBurger = styled.button`
 		background: ${({ open }) => (open ? "black" : "rgb(0, 61, 0)")};
 		border-radius: 10px;
 		transition: all 0.3s linear;
-		position: relative;
 		transform-origin: 1px;
 
 		:first-child {

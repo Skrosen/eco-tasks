@@ -61,9 +61,13 @@ export const StyledP = styled.p`
 `;
 
 export const InlineP = styled.p`
-	display: inline;
+	display: block;
 	font-size: 20px;
-	margin-left: 15px;
+
+	@media (min-width: 768px) {
+		display: inline;
+		margin-left: 15px;
+	}
 `;
 
 export const InlineP2 = styled.p`
