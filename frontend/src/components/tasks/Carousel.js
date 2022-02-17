@@ -4,6 +4,7 @@ export const Carousel = styled.section`
 	margin: 0 auto;
 	overflow: hidden;
 	text-align: center;
+	border-radius: 10px;
 `;
 
 export const Slides = styled.div`

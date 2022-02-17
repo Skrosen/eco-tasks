@@ -3,14 +3,14 @@ import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import _ from "lodash";
 
+import checkedTasks from "../../reducers/checkedTasks";
 import user from "../../reducers/user";
 import { fetchTasks } from "../../reducers/tasks";
 import { fetchCheckedTasks } from "../../reducers/checkedTasks";
 import { Button } from "../reusable-components/Buttons";
+import { InlineH1, InlineP, StyledP } from "../reusable-components/Text";
 
 import { API_URL } from "../../utils/urls";
-
-import checkedTasks from "../../reducers/checkedTasks";
 
 import {
 	Carousel,
@@ -27,6 +27,8 @@ const Tasks = () => {
 	const navigate = useNavigate();
 	const accessToken = useSelector((store) => store?.user?.accessToken);
 	const userId = useSelector((store) => store?.user?.userId);
+	const username = useSelector((store) => store?.user?.username);
+	const score = useSelector((store) => store?.user?.score);
 	const tasks = useSelector((store) => store?.tasks?.tasks?.response);
 	const dispatch = useDispatch();
 
@@ -82,17 +84,26 @@ const Tasks = () => {
 
 	return (
 		<>
-			<h1>All tasks</h1>
+			<InlineH1>{username}</InlineH1>
+			<InlineP>Total score: {score}</InlineP>
+			<h2>Tasks to check</h2>
+			<StyledP>
+				Here you can find tasks to check. Add a task to your checked-tasks list
+				by pressing the button with a plus-sign. You can mark a task as checked
+				as many times as you'd like. If you mark a task as checked by mistake,
+				you can remove it from the checked-tasks section.
+			</StyledP>
 			<Carousel>
 				{categorizedTasks &&
 					Array.isArray(categorizedTasks) &&
 					categorizedTasks?.map((task) => (
 						<Slides key={task.category}>
-							<h2>{task.category}</h2>
+							<h3>{task.category}</h3>
 							<OuterCard>
 								{task.tasks.map((task) => (
 									<Card key={task._id}>
 										<Title>{task.title}</Title>
+										<StyledP>Score: {task.score}</StyledP>
 										<Pdiv>
 											<Description>{task.description}</Description>
 										</Pdiv>
